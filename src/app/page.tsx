@@ -11,6 +11,7 @@ import { Window } from "@/app/system/Window";
 const Home = observer(() => {
   const { windowStore } = useStore();
 
+  // Add initial windows when component mounts
   useEffect(() => {
     windowStore.addWindow({
       id: "test-window-1",
@@ -42,7 +43,8 @@ const Home = observer(() => {
 
   return (
     <Desktop>
-      {windowStore.windows.map((windowData) => (
+      {/* Render windows from the store */}
+      {windowStore.windowsWithZIndex.map((windowData) => (
         <Window key={windowData.id} {...windowData}>
           <h1 className="text-black">Hello from {windowData.title}</h1>
         </Window>

@@ -9,16 +9,7 @@ import { useStore } from "@/app/stores/StoreContext";
 import type { WindowProps } from "./types";
 
 export const Window = observer(
-  ({
-    children,
-    title,
-    x,
-    y,
-    width,
-    height,
-    id,
-    zIndex = 1000,
-  }: WindowProps) => {
+  ({ children, title, x, y, width, height, id, zIndex }: WindowProps) => {
     const { windowStore } = useStore();
 
     const handleClose = () => {
@@ -49,8 +40,9 @@ export const Window = observer(
         data-window-id={id}
         style={{ zIndex: zIndex }}
         onMouseDown={handleFocus}
+        dragHandleClassName="window-drag-handle"
       >
-        <div className="w-full h-8 bg-zinc-800 flex items-center justify-between">
+        <div className="w-full h-8 bg-zinc-800 flex items-center justify-between window-drag-handle">
           <div className="text-sm h-full px-2 bg-zinc-900 font-bold flex items-center rounded-t-xl">
             {title}
           </div>

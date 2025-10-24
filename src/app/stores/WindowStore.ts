@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { computed, makeObservable, observable, action } from "mobx";
 
 import type { WindowData } from "../system/Window/types";
 
@@ -7,18 +7,30 @@ export class WindowStore {
   private readonly MAX_Z_INDEX = 1000;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      windows: observable,
+      addWindow: action,
+      removeWindow: action,
+      minimizeWindow: action,
+      maximizeWindow: action,
+      focusWindow: action,
+      windowsWithZIndex: computed,
+    });
+  }
+
+  get windowsWithZIndex() {
+    return this.windows.map((window, index) => ({
+      ...window,
+      zIndex: this.MAX_Z_INDEX - index,
+    }));
   }
 
   addWindow(window: WindowData) {
-    // Add new window at the front (index 0 = highest z-index)
     this.windows = [window, ...this.windows];
-    this.recalculateZIndices();
   }
 
   removeWindow(id: string) {
     this.windows = this.windows.filter((w) => w.id !== id);
-    this.recalculateZIndices();
   }
 
   minimizeWindow(id: string) {
@@ -34,23 +46,10 @@ export class WindowStore {
   }
 
   focusWindow(id: string) {
-    // Find the window and move it to the front
     const windowIndex = this.windows.findIndex((w) => w.id === id);
     if (windowIndex === -1) return;
 
-    // Remove window from current position and add to front
     const [focusedWindow] = this.windows.splice(windowIndex, 1);
     this.windows = [focusedWindow, ...this.windows];
-
-    this.recalculateZIndices();
-  }
-
-  private recalculateZIndices() {
-    // Index 0 gets highest z-index (MAX_Z_INDEX)
-    // Index 1 gets MAX_Z_INDEX - 1, etc.
-    this.windows = this.windows.map((window, index) => ({
-      ...window,
-      zIndex: this.MAX_Z_INDEX - index,
-    }));
   }
 }
