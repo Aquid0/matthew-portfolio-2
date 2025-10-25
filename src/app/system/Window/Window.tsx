@@ -1,11 +1,11 @@
 "use client";
 
-import { Minus, Maximize2, X } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { Rnd } from "react-rnd";
 
 import { useStore } from "@/app/stores/StoreContext";
 
+import { TitleBar } from "./components/TitleBar";
 import type { WindowProps } from "./types";
 
 export const Window = observer(
@@ -42,31 +42,12 @@ export const Window = observer(
         onMouseDown={handleFocus}
         dragHandleClassName="window-drag-handle"
       >
-        <div className="w-full h-8 bg-zinc-800 flex items-center justify-between window-drag-handle">
-          <div className="text-sm h-full px-2 bg-zinc-900 font-bold flex items-center rounded-t-xl">
-            {title}
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              className="w-6 h-6 bg-zinc-800 hover:bg-yellow-600 transition-colors"
-              onClick={handleMinimize}
-            >
-              <Minus />
-            </button>
-            <button
-              className="w-6 h-6 bg-zinc-800 hover:bg-green-600 transition-colors"
-              onClick={handleMaximize}
-            >
-              <Maximize2 />
-            </button>
-            <button
-              className="w-6 h-6 bg-zinc-800 hover:bg-red-600 transition-colors"
-              onClick={handleClose}
-            >
-              <X />
-            </button>
-          </div>
-        </div>
+        <TitleBar
+          title={title}
+          onClose={handleClose}
+          onMinimize={handleMinimize}
+          onMaximize={handleMaximize}
+        />
         {children}
       </Rnd>
     );
