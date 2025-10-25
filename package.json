@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.546.0",
     "mobx": "^6.15.0",
@@ -24,6 +25,7 @@
     "@types/node": "^20",
     "@types/react": "^18.3.26",
     "@types/react-dom": "^18.3.7",
+    "@types/webpack": "^5.28.5",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "tailwindcss": "^4",
