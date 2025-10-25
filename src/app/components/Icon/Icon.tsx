@@ -7,7 +7,7 @@ export const Icon = ({
   color = "white",
 }: IconProps) => {
   return (
-    <div className="px-2 h-10 hover:bg-zinc-600 transition-colors flex items-center justify-center">
+    <div className="flex h-10 items-center justify-center px-2 transition-colors hover:bg-zinc-600">
       <IconComponent
         width={width}
         height={height}

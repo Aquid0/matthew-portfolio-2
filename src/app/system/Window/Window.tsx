@@ -36,7 +36,7 @@ export const Window = observer(
           width: width,
           height: height,
         }}
-        className="w-1/2 h-1/2 bg-white shadow-md"
+        className="h-1/2 w-1/2 bg-white shadow-md"
         data-window-id={id}
         style={{ zIndex: zIndex }}
         onMouseDown={handleFocus}
@@ -51,5 +51,5 @@ export const Window = observer(
         {children}
       </Rnd>
     );
-  }
+  },
 );

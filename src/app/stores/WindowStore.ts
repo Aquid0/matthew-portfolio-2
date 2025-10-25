@@ -34,7 +34,7 @@ export class WindowStore {
   }
   get taskbarItems() {
     const runningAppIds = Array.from(
-      new Set(this.availableApps.map((w) => w.appId))
+      new Set(this.availableApps.map((w) => w.appId)),
     );
 
     return AppRegistry.apps.map((app) => ({
@@ -55,13 +55,13 @@ export class WindowStore {
 
   minimizeWindow(id: string) {
     this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, windowState: "MINIMISED" } : w
+      w.id === id ? { ...w, windowState: "MINIMISED" } : w,
     );
   }
 
   maximizeWindow(id: string) {
     this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, windowState: "MAXIMISED" } : w
+      w.id === id ? { ...w, windowState: "MAXIMISED" } : w,
     );
   }
 

@@ -9,25 +9,25 @@ export const TitleBar = ({
   onMaximize,
 }: TitleBarProps) => {
   return (
-    <div className="w-full h-8 bg-zinc-800 flex items-center justify-between window-drag-handle">
-      <div className="text-sm h-full px-2 bg-zinc-900 font-bold flex items-center rounded-t-xl">
+    <div className="window-drag-handle flex h-8 w-full items-center justify-between bg-zinc-800">
+      <div className="flex h-full items-center rounded-t-xl bg-zinc-900 px-2 text-sm font-bold">
         {title}
       </div>
       <div className="flex items-center gap-3">
         <button
-          className="w-6 h-6 bg-zinc-800 hover:bg-yellow-600 transition-colors"
+          className="h-6 w-6 bg-zinc-800 transition-colors hover:bg-yellow-600"
           onClick={onMinimize}
         >
           <Minus />
         </button>
         <button
-          className="w-6 h-6 bg-zinc-800 hover:bg-green-600 transition-colors"
+          className="h-6 w-6 bg-zinc-800 transition-colors hover:bg-green-600"
           onClick={onMaximize}
         >
           <Maximize2 />
         </button>
         <button
-          className="w-6 h-6 bg-zinc-800 hover:bg-red-600 transition-colors"
+          className="h-6 w-6 bg-zinc-800 transition-colors hover:bg-red-600"
           onClick={onClose}
         >
           <X />
