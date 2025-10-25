@@ -39,13 +39,13 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "bash -c 'echo \"🔍 Running ESLint...\"'",
+      "printf '\\n🔍 Running ESLint...\\n'",
       "eslint --fix",
-      "bash -c 'echo \"✨ Running Prettier...\"'",
+      "printf '\\n✨ Running Prettier...\\n'",
       "prettier --write"
     ],
     "*.{json,css,md}": [
-      "bash -c 'echo \"✨ Running Prettier...\"'",
+      "printf '\\n✨ Running Prettier...\\n'",
       "prettier --write"
     ]
   }
