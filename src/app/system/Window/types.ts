@@ -1,5 +1,8 @@
+import type { AppId } from "@/app/stores/types";
+
 export type WindowData = {
   id: string;
+  appId: AppId;
   title: string;
   x: number;
   y: number;
