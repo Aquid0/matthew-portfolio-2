@@ -1,5 +1,7 @@
 import type { AppId } from "@/app/stores/types";
 
+export type WindowState = "MINIMISED" | "MAXIMISED" | "NORMAL";
+
 export type WindowData = {
   id: string;
   appId: AppId;
@@ -8,8 +10,7 @@ export type WindowData = {
   y: number;
   width: number;
   height: number;
-  isMinimized?: boolean;
-  isMaximized?: boolean;
+  windowState: WindowState;
   zIndex?: number;
 };
 

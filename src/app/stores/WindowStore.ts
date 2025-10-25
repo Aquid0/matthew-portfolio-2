@@ -26,7 +26,7 @@ export class WindowStore {
 
   get windowsWithZIndex() {
     return this.availableApps
-      .filter((w) => w.isMinimized !== true)
+      .filter((w) => w.windowState === "NORMAL")
       .map((window, index) => ({
         ...window,
         zIndex: this.MAX_Z_INDEX - index,
@@ -55,13 +55,13 @@ export class WindowStore {
 
   minimizeWindow(id: string) {
     this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, isMinimized: true } : w
+      w.id === id ? { ...w, windowState: "MINIMISED" } : w
     );
   }
 
   maximizeWindow(id: string) {
     this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, isMaximized: true } : w
+      w.id === id ? { ...w, windowState: "MAXIMISED" } : w
     );
   }
 

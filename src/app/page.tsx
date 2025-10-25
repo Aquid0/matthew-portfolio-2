@@ -21,6 +21,7 @@ const Home = observer(() => {
       y: 100,
       width: 320,
       height: 200,
+      windowState: "NORMAL",
     });
 
     windowStore.addWindow({
@@ -31,6 +32,7 @@ const Home = observer(() => {
       y: 150,
       width: 320,
       height: 200,
+      windowState: "NORMAL",
     });
 
     windowStore.addWindow({
@@ -41,6 +43,7 @@ const Home = observer(() => {
       y: 200,
       width: 320,
       height: 200,
+      windowState: "NORMAL",
     });
   }, [windowStore]);
 
