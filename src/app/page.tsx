@@ -15,6 +15,7 @@ const Home = observer(() => {
   useEffect(() => {
     windowStore.addWindow({
       id: "test-window-1",
+      appId: "test-1",
       title: "Test Window 1",
       x: 100,
       y: 100,
@@ -24,6 +25,7 @@ const Home = observer(() => {
 
     windowStore.addWindow({
       id: "test-window-2",
+      appId: "test-2",
       title: "Test Window 2",
       x: 200,
       y: 150,
@@ -33,6 +35,7 @@ const Home = observer(() => {
 
     windowStore.addWindow({
       id: "test-window-3",
+      appId: "test-3",
       title: "Test Window 3",
       x: 300,
       y: 200,

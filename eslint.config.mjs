@@ -1,5 +1,6 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,26 +35,32 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      
+
       // Code Style
-      "max-len": ["warn", { 
-        code: 100, 
-        ignoreComments: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
-        ignoreUrls: true,
-      }],
+      "max-len": [
+        "warn",
+        {
+          code: 100,
+          ignoreComments: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreUrls: true,
+        },
+      ],
       "prefer-const": "warn",
       "no-var": "error",
-      
+
       // React Best Practices
       "react/self-closing-comp": "warn",
-      "react/jsx-curly-brace-presence": ["warn", { props: "never", children: "never" }],
+      "react/jsx-curly-brace-presence": [
+        "warn",
+        { props: "never", children: "never" },
+      ],
       "react/jsx-boolean-value": ["warn", "never"],
       "react/jsx-no-useless-fragment": "warn",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      
+
       // TypeScript Best Practices
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -62,7 +69,7 @@ const eslintConfig = [
         "warn",
         { prefer: "type-imports" },
       ],
-      
+
       // Import Organization
       "import/order": [
         "warn",
