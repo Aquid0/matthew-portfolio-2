@@ -1,7 +1,8 @@
+import StartIcon from "@public/start.svg";
+
 import React from "react";
 
 import { Icon } from "@/app/components/Icon";
-import StartIcon from "@public/start.svg";
 
 export const Taskbar = () => {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
 import { useStore } from "@/app/stores/StoreContext";
 import { Desktop } from "@/app/system/Desktop";
