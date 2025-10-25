@@ -14,14 +14,15 @@ export const Taskbar = () => {
       <div className="flex flex-1">{/* App icons will go here */}</div>
 
       {/* Date/Time */}
-      <div className="flex h-10 flex-col items-center justify-center gap-1 px-2 text-xs text-white transition-colors hover:bg-zinc-600">
-        <span>
+
+      <div className="flex h-10 cursor-default flex-col items-center justify-center gap-1 px-2 text-xs text-white transition-colors hover:bg-zinc-600">
+        <span className="select-none">
           {new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           })}
         </span>
-        <span>
+        <span className="select-none">
           {new Date().toLocaleDateString([], {
             day: "2-digit",
             month: "2-digit",

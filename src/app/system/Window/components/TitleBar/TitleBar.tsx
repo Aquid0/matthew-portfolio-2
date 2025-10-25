@@ -10,7 +10,7 @@ export const TitleBar = ({
 }: TitleBarProps) => {
   return (
     <div className="window-drag-handle flex h-8 w-full items-center justify-between bg-zinc-800">
-      <div className="flex h-full items-center rounded-t-xl bg-zinc-900 px-2 text-sm font-bold">
+      <div className="flex h-full cursor-default items-center rounded-t-xl bg-zinc-900 px-2 text-sm font-bold select-none">
         {title}
       </div>
       <div className="flex items-center gap-3">

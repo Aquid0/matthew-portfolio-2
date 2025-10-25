@@ -1,7 +1,7 @@
 "use client";
 
-import { observer } from "mobx-react-lite";
 import { Rnd } from "react-rnd";
+import { observer } from "mobx-react-lite";
 
 import { useStore } from "@/app/stores/StoreContext";
 

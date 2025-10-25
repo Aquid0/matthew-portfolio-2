@@ -1,7 +1,6 @@
-import { computed, makeObservable, observable, action } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 import type { WindowData } from "../system/Window/types";
-
 import { AppRegistry } from "./constants/AppRegistry";
 import type { AppId } from "./types";
 
