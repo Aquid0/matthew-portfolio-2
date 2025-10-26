@@ -36,11 +36,24 @@ export const Window = observer(
           width: width,
           height: height,
         }}
+        minWidth={320}
+        minHeight={200}
+        bounds="window"
         className="h-1/2 w-1/2 bg-white shadow-md"
         data-window-id={id}
         style={{ zIndex: zIndex }}
         onMouseDown={handleFocus}
         dragHandleClassName="window-drag-handle"
+        resizeHandleStyles={{
+          top: { cursor: "ns-resize" },
+          right: { cursor: "ew-resize" },
+          bottom: { cursor: "ns-resize" },
+          left: { cursor: "ew-resize" },
+          topRight: { cursor: "nesw-resize" },
+          bottomRight: { cursor: "nwse-resize" },
+          bottomLeft: { cursor: "nesw-resize" },
+          topLeft: { cursor: "nwse-resize" },
+        }}
       >
         <div data-window-content={id}>
           <TitleBar

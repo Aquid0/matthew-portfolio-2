@@ -12,16 +12,17 @@ export const Icon = ({
   onClick,
   windows = [],
 }: IconProps) => {
-  const [showPreview, setShowPreview] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const isViewingPreview = isHovered && windows.length > 0;
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setShowPreview(true)}
-      onMouseLeave={() => setShowPreview(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex h-10 items-center justify-center px-2 transition-colors duration-100 hover:bg-zinc-600 ${isFocused ? "bg-zinc-600" : ""}`}
+        className={`flex h-10 items-center justify-center px-2 transition-colors duration-100 hover:bg-zinc-600 ${isFocused || isViewingPreview ? "bg-zinc-600" : ""}`}
       >
         <IconComponent
           width={width}
@@ -34,7 +35,8 @@ export const Icon = ({
         )}
       </div>
 
-      {showPreview && windows.length > 0 && (
+      {/* Preview window list */}
+      {isHovered && windows.length > 0 && (
         <div className="absolute bottom-10 left-0 z-50 flex w-48 flex-col gap-1 rounded bg-zinc-700 p-2 shadow-lg">
           {windows.map((window) => (
             <div
