@@ -28,8 +28,8 @@
     "@types/react": "^18.3.26",
     "@types/react-dom": "^18.3.7",
     "@types/webpack": "^5.28.5",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.6",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.18",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
@@ -40,13 +40,10 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "printf '\\n🔍 Running ESLint...\\n'",
       "eslint --fix",
-      "printf '\\n✨ Running Prettier...\\n'",
       "prettier --write"
     ],
     "*.{json,css,md}": [
-      "printf '\\n✨ Running Prettier...\\n'",
       "prettier --write"
     ]
   }

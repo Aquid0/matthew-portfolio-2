@@ -1,10 +1,10 @@
 "use client";
 
 import StartIcon from "@public/start.svg";
-
 import React, { useEffect, useState } from "react";
 
 import { Icon } from "@/app/components/Icon";
+import { AppRegistry } from "@/app/stores/constants/AppRegistry";
 
 export const Taskbar = () => {
   const [time, setTime] = useState<Date | null>(null);
@@ -21,7 +21,13 @@ export const Taskbar = () => {
       <Icon icon={StartIcon} />
 
       {/* App Icons */}
-      <div className="flex flex-1">{/* App icons will go here */}</div>
+
+      <div className="flex flex-1">
+        {" "}
+        {AppRegistry.apps.map((app) => (
+          <Icon key={app.id} icon={app.icon} />
+        ))}
+      </div>
 
       {/* Date/Time */}
       <div className="flex h-10 cursor-default flex-col items-center justify-center gap-1 px-2 text-xs text-white transition-colors hover:bg-zinc-600">
