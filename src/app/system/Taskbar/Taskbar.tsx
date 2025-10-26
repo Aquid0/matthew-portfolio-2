@@ -1,12 +1,14 @@
 "use client";
 
 import StartIcon from "@public/start.svg";
+import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 
 import { Icon } from "@/app/components/Icon";
-import { AppRegistry } from "@/app/stores/constants/AppRegistry";
+import { useStore } from "@/app/stores/StoreContext";
 
-export const Taskbar = () => {
+export const Taskbar = observer(() => {
+  const { windowStore } = useStore();
   const [time, setTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -17,19 +19,27 @@ export const Taskbar = () => {
 
   return (
     <div className="fixed right-0 bottom-0 left-0 flex h-10 w-full items-center bg-zinc-800">
-      {/* Start Icon */}
       <Icon icon={StartIcon} />
 
-      {/* App Icons */}
-
       <div className="flex flex-1">
-        {" "}
-        {AppRegistry.apps.map((app) => (
-          <Icon key={app.id} icon={app.icon} />
-        ))}
+        {windowStore.taskbarItems.map(
+          ({ app, isFocused, isRunning, availableWindows }) => (
+            <Icon
+              key={app.id}
+              width={app.iconWidth}
+              height={app.iconHeight}
+              icon={app.icon}
+              isFocused={isFocused}
+              isRunning={isRunning}
+              windows={availableWindows}
+              onClick={(windowId) =>
+                windowId && windowStore.focusWindow(windowId)
+              }
+            />
+          ),
+        )}
       </div>
 
-      {/* Date/Time */}
       <div className="flex h-10 cursor-default flex-col items-center justify-center gap-1 px-2 text-xs text-white transition-colors hover:bg-zinc-600">
         <span className="select-none">
           {time?.toLocaleTimeString([], {
@@ -47,4 +57,4 @@ export const Taskbar = () => {
       </div>
     </div>
   );
-};
+});

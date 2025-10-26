@@ -6,8 +6,10 @@ export type App = {
   id: AppId;
   name: string;
   icon: FC<SVGProps<SVGSVGElement>>;
-  defaultWidth: number;
-  defaultHeight: number;
+  defaultWindowWidth: number;
+  defaultWindowHeight: number;
+  iconWidth: number;
+  iconHeight: number;
 };
 
 export type AppRegistryProps = {

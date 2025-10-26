@@ -31,6 +31,7 @@ export class WindowStore {
         zIndex: this.MAX_Z_INDEX - index,
       }));
   }
+
   get taskbarItems() {
     const runningAppIds = Array.from(
       new Set(this.availableApps.map((w) => w.appId)),
@@ -39,7 +40,7 @@ export class WindowStore {
     return AppRegistry.apps.map((app) => ({
       app,
       isRunning: runningAppIds.includes(app.id),
-      windowCount: this.availableApps.filter((w) => w.appId === app.id).length,
+      availableWindows: this.availableApps.filter((w) => w.appId === app.id),
       isFocused: this.availableApps[0]?.appId === app.id,
     }));
   }
@@ -65,6 +66,13 @@ export class WindowStore {
   }
 
   focusWindow(id: string) {
+    console.log("hello");
+    console.log("id: ", id);
+
+    for (const app of this.availableApps) {
+      console.log("app: ", app);
+    }
+
     const windowIndex = this.availableApps.findIndex((w) => w.id === id);
     if (windowIndex === -1) return;
 

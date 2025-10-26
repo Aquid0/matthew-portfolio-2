@@ -42,13 +42,15 @@ export const Window = observer(
         onMouseDown={handleFocus}
         dragHandleClassName="window-drag-handle"
       >
-        <TitleBar
-          title={title}
-          onClose={handleClose}
-          onMinimize={handleMinimize}
-          onMaximize={handleMaximize}
-        />
-        {children}
+        <div data-window-content={id}>
+          <TitleBar
+            title={title}
+            onClose={handleClose}
+            onMinimize={handleMinimize}
+            onMaximize={handleMaximize}
+          />
+          {children}
+        </div>
       </Rnd>
     );
   },
