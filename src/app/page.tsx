@@ -13,14 +13,18 @@ const Home = observer(() => {
 
   // Add initial windows when component mounts
   useEffect(() => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight - 40; // Subtract taskbar height
+    const gap = 8; // Buffer between windows
+
     windowStore.addWindow({
       id: "test-window-1",
       appId: "test-1",
       title: "Test Window 1",
-      x: 100,
-      y: 100,
-      width: 320,
-      height: 200,
+      x: gap,
+      y: gap,
+      width: viewportWidth / 2 - gap - gap / 2,
+      height: viewportHeight - gap * 2,
       windowState: "NORMAL",
     });
 
@@ -28,10 +32,10 @@ const Home = observer(() => {
       id: "test-window-2",
       appId: "test-2",
       title: "Test Window 2",
-      x: 200,
-      y: 150,
-      width: 320,
-      height: 200,
+      x: viewportWidth / 2 + gap / 2,
+      y: gap,
+      width: viewportWidth / 2 - gap - gap / 2,
+      height: viewportHeight / 2 - gap - gap / 2,
       windowState: "NORMAL",
     });
 
@@ -39,10 +43,10 @@ const Home = observer(() => {
       id: "test-window-3",
       appId: "test-3",
       title: "Test Window 3",
-      x: 300,
-      y: 200,
-      width: 320,
-      height: 200,
+      x: viewportWidth / 2 + gap / 2,
+      y: viewportHeight / 2 + gap / 2,
+      width: viewportWidth / 2 - gap - gap / 2,
+      height: viewportHeight / 2 - gap - gap / 2,
       windowState: "NORMAL",
     });
   }, [windowStore]);

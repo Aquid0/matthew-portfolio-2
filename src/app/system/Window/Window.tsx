@@ -41,7 +41,7 @@ export const Window = observer(
               top: 0,
               left: 0,
               width: "100vw",
-              height: "calc(100vh - 48px)",
+              height: "calc(100vh - 40px)",
               zIndex: zIndex,
             }}
             onMouseDown={handleFocus}
