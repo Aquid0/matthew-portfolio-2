@@ -17,7 +17,8 @@ export class WindowStore {
       addWindow: action,
       removeWindow: action,
       minimizeWindow: action,
-      maximizeWindow: action,
+      toggleMaximizeWindow: action,
+      updateWindowBounds: action,
       focusWindow: action,
       windowsWithZIndex: computed,
     });
@@ -25,7 +26,7 @@ export class WindowStore {
 
   get windowsWithZIndex() {
     return this.availableApps
-      .filter((w) => w.windowState === "NORMAL")
+      .filter((w) => w.windowState !== "MINIMISED")
       .map((window, index) => ({
         ...window,
         zIndex: this.MAX_Z_INDEX - index,
@@ -58,25 +59,39 @@ export class WindowStore {
       w.id === id ? { ...w, windowState: "MINIMISED" } : w,
     );
   }
+  toggleMaximizeWindow(id: string) {
+    this.availableApps = this.availableApps.map((w) => {
+      if (w.id !== id) return w;
+      const newState = w.windowState === "MAXIMISED" ? "NORMAL" : "MAXIMISED";
+      return { ...w, windowState: newState };
+    });
+  }
 
-  maximizeWindow(id: string) {
+  updateWindowBounds(
+    id: string,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ) {
     this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, windowState: "MAXIMISED" } : w,
+      w.id === id ? { ...w, x, y, width, height } : w,
     );
   }
 
   focusWindow(id: string) {
-    console.log("hello");
-    console.log("id: ", id);
-
-    for (const app of this.availableApps) {
-      console.log("app: ", app);
-    }
-
     const windowIndex = this.availableApps.findIndex((w) => w.id === id);
     if (windowIndex === -1) return;
 
     const [focusedWindow] = this.availableApps.splice(windowIndex, 1);
     this.availableApps = [focusedWindow, ...this.availableApps];
+
+    if (focusedWindow.windowState === "MINIMISED") {
+      focusedWindow.windowState = "NORMAL";
+    }
+  }
+
+  getWindow(id: string) {
+    return this.availableApps.find((w) => w.id === id);
   }
 }

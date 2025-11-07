@@ -12,6 +12,10 @@ export type WindowData = {
   height: number;
   windowState: WindowState;
   zIndex?: number;
+  prevX?: number;
+  prevY?: number;
+  prevWidth?: number;
+  prevHeight?: number;
 };
 
 export type WindowProps = WindowData & {

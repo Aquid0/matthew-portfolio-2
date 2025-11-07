@@ -20,24 +20,63 @@ export const Window = observer(
       windowStore.minimizeWindow(id);
     };
 
-    const handleMaximize = () => {
-      windowStore.maximizeWindow(id);
+    const handleToggleMaximize = () => {
+      windowStore.toggleMaximizeWindow(id);
     };
 
     const handleFocus = () => {
       windowStore.focusWindow(id);
     };
 
+    switch (windowStore.getWindow(id)?.windowState) {
+      case "MINIMISED":
+        return null;
+      case "MAXIMISED":
+        console.log(windowStore.availableApps);
+        return (
+          <div
+            className="absolute bg-white shadow-md"
+            data-window-id={id}
+            style={{
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "calc(100vh - 48px)",
+              zIndex: zIndex,
+            }}
+            onMouseDown={handleFocus}
+          >
+            <div data-window-content={id}>
+              <TitleBar
+                title={title}
+                onClose={handleClose}
+                onMinimize={handleMinimize}
+                onMaximize={handleToggleMaximize}
+              />
+              {children}
+            </div>
+          </div>
+        );
+      default:
+        break;
+    }
+
     return (
       <Rnd
-        default={{
-          x: x,
-          y: y,
-          width: width,
-          height: height,
+        position={{ x, y }}
+        size={{ width, height }}
+        onDragStop={(e, d) => {
+          windowStore.updateWindowBounds(id, d.x, d.y, width, height);
         }}
-        minWidth={320}
-        minHeight={200}
+        onResizeStop={(e, direction, ref, delta, position) => {
+          windowStore.updateWindowBounds(
+            id,
+            position.x,
+            position.y,
+            parseInt(ref.style.width),
+            parseInt(ref.style.height),
+          );
+        }}
         bounds="window"
         className="h-1/2 w-1/2 bg-white shadow-md"
         data-window-id={id}
@@ -60,7 +99,7 @@ export const Window = observer(
             title={title}
             onClose={handleClose}
             onMinimize={handleMinimize}
-            onMaximize={handleMaximize}
+            onMaximize={handleToggleMaximize}
           />
           {children}
         </div>
