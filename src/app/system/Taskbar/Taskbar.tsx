@@ -18,7 +18,7 @@ export const Taskbar = observer(() => {
   }, []);
 
   return (
-    <div className="fixed right-0 bottom-0 left-0 flex h-10 w-full items-center bg-zinc-800">
+    <div className="fixed right-0 bottom-0 left-0 z-1000 flex h-10 w-full items-center bg-zinc-800">
       <Icon icon={StartIcon} />
 
       <div className="flex flex-1">

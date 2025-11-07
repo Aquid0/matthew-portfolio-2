@@ -77,6 +77,8 @@ export const Window = observer(
             parseInt(ref.style.height),
           );
         }}
+        minWidth={320}
+        minHeight={200}
         bounds="window"
         className="h-1/2 w-1/2 bg-white shadow-md"
         data-window-id={id}
