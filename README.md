@@ -36,62 +36,6 @@ src/
 └── utils/            # Utility functions (future)
 ```
 
-## Architecture Decisions
-
-### Type Organization
-
-**Shared Types (`src/types/`):**
-
-- Used across multiple modules
-- Represent domain models/entities
-- Core data structures
-- Examples: `WindowData`, `TerminalLine`, `AppId`
-
-**Local Types (`component/types.ts`):**
-
-- Only used within that component/module
-- Implementation details
-- Examples: `TitleBarProps`, `IconProps`
-
-**Rule:** If you import a type from `../../../`, move it to `src/types/`
-
-### Component Structure
-
-- **Terminal:** Command-line interface with typewriter animations and syntax highlighting
-- **Window System:** Draggable, resizable windows with minimize/maximize
-- **Desktop:** Main container with CRT effect overlay
-- **Taskbar:** Application launcher and window management
-
-### State Management
-
-- **WindowStore:** Manages window positions, states, and z-index
-- **TerminalStore:** Handles command execution across multiple terminal instances
-- **MobX Observables:** Reactive state updates with minimal boilerplate
-
-## Key Features
-
-### Terminal System
-
-- Typewriter animation for text display
-- Syntax highlighting for keywords (React, TypeScript, Amazon)
-- Command registry for extensible commands
-- Multiple terminal instances with cross-terminal command execution
-
-### Window Management
-
-- Drag and drop positioning
-- Resize with min/max constraints
-- Minimize/maximize states
-- Focus management with visual indicators
-- Z-index stacking
-
-### Visual Effects
-
-- CRT screen flicker animation
-- Text glow effects
-- Terminal cursor blink (530ms standard rate)
-- Smooth transitions for focus states
-
 ## Development
 
 ```bash
@@ -107,14 +51,6 @@ npm run build
 # Start production server
 npm start
 ```
-
-## Code Style
-
-- **Imports:** Use `@/` path aliases for clean imports
-- **Components:** Functional components with TypeScript
-- **State:** MobX observers for reactive components
-- **Styling:** Tailwind utility classes with custom animations
-- **Types:** Explicit typing, avoid `any`
 
 ## Future Enhancements
 
