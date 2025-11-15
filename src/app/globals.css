@@ -85,6 +85,36 @@ body {
   animation: textGlow 2s ease-in-out infinite;
 }
 
+@keyframes titleFlicker {
+  0%,
+  100% {
+    text-shadow:
+      0.02em 0 0 rgba(255, 0, 0, 0.6),
+      -0.02em 0 0 rgba(0, 255, 0, 0.5),
+      0 0 0.4em rgba(124, 118, 199, 1),
+      0 0 0.8em rgba(124, 118, 199, 0.6);
+  }
+  25%,
+  75% {
+    text-shadow:
+      0.03em 0 0 rgba(255, 0, 0, 0.8),
+      -0.03em 0 0 rgba(0, 255, 0, 0.7),
+      0 0 0.6em rgba(124, 118, 199, 1),
+      0 0 1.2em rgba(124, 118, 199, 0.8);
+  }
+  50% {
+    text-shadow:
+      0.02em 0 0 rgba(255, 0, 0, 0.6),
+      -0.02em 0 0 rgba(0, 255, 0, 0.5),
+      0 0 0.4em rgba(124, 118, 199, 1),
+      0 0 0.8em rgba(124, 118, 199, 0.6);
+  }
+}
+
+.crt-title {
+  animation: titleFlicker 1.5s ease-in-out infinite;
+}
+
 body {
   color: var(--foreground);
   font-family: "Roboto Mono", Menlo, Monaco, monospace;
