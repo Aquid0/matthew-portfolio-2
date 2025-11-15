@@ -1,6 +1,6 @@
 import GlobeIcon from "@public/globe.svg";
 
-import type { AppRegistryProps } from "../types";
+import type { AppRegistryProps } from "@/types/store";
 
 // TODO: Refactor to reference different apps - e.g., main terminal, quick actions, sub terminal
 export const AppRegistry: AppRegistryProps = {

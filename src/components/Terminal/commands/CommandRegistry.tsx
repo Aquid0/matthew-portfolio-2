@@ -1,4 +1,5 @@
-import { CommandHandler } from "../types";
+import { CommandHandler } from "@/types/terminal";
+
 import { QuickActions } from "./QuickActions";
 
 export const commands: Record<string, CommandHandler> = {

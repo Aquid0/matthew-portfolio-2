@@ -1,8 +1,8 @@
 import { action, computed, makeObservable, observable } from "mobx";
 
-import type { WindowData } from "../system/Window/types";
-import { AppRegistry } from "./constants/AppRegistry";
-import type { AppId } from "./types";
+import { AppRegistry } from "@/constants/AppRegistry";
+import type { AppId } from "@/types/store";
+import type { WindowData } from "@/types/window";
 
 export class WindowStore {
   availableApps: WindowData[] = [];
