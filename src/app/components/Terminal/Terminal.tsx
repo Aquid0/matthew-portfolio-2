@@ -9,10 +9,19 @@ export const Terminal = () => {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setLines((prev) => [...prev, `$ ${input}`, `Command: ${input}`, ""]);
+      setLines((prev) => [...prev, input]);
       setInput("");
     }
   };
+
+  const Prompt = () => (
+    <>
+      <span className="text-[#7C76C7]">guest@matthew-portfolio</span>
+      <span className="text-[#E0DEF4]">
+        {"\u00A0"}~{"\u00A0"}$
+      </span>
+    </>
+  );
 
   return (
     <div
@@ -20,16 +29,20 @@ export const Terminal = () => {
       onClick={() => inputRef.current?.focus()}
     >
       {lines.map((line, i) => (
-        <div key={i}>{line || "\u00A0"}</div>
+        <div key={i}>
+          <Prompt /> {line}
+        </div>
       ))}
-      <div className="flex">
-        <span>$ </span>
+      <div className="flex gap-2">
+        <span>
+          <Prompt />
+        </span>
         <input
           ref={inputRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-1 bg-transparent outline-none"
+          className="flex-1 bg-transparent text-[#E0DEF4] outline-none"
           autoFocus
         />
       </div>
