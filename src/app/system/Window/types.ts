@@ -16,6 +16,8 @@ export type WindowData = {
   prevY?: number;
   prevWidth?: number;
   prevHeight?: number;
+  isFixed?: boolean;
+  showTitlebar?: boolean;
 };
 
 export type WindowProps = WindowData & {

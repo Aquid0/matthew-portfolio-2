@@ -9,7 +9,18 @@ import { TitleBar } from "./components/TitleBar";
 import type { WindowProps } from "./types";
 
 export const Window = observer(
-  ({ children, title, x, y, width, height, id, zIndex }: WindowProps) => {
+  ({
+    children,
+    title,
+    x,
+    y,
+    width,
+    height,
+    id,
+    zIndex,
+    isFixed = false,
+    showTitlebar = true,
+  }: WindowProps) => {
     const { windowStore } = useStore();
 
     const handleClose = () => {
@@ -32,7 +43,6 @@ export const Window = observer(
       case "MINIMISED":
         return null;
       case "MAXIMISED":
-        console.log(windowStore.availableApps);
         return (
           <div
             className="absolute bg-white shadow-md"
@@ -68,6 +78,7 @@ export const Window = observer(
         onDragStop={(e, d) => {
           windowStore.updateWindowBounds(id, d.x, d.y, width, height);
         }}
+        disableDragging={isFixed}
         onResizeStop={(e, direction, ref, delta, position) => {
           windowStore.updateWindowBounds(
             id,
@@ -97,12 +108,14 @@ export const Window = observer(
         }}
       >
         <div data-window-content={id}>
-          <TitleBar
-            title={title}
-            onClose={handleClose}
-            onMinimize={handleMinimize}
-            onMaximize={handleToggleMaximize}
-          />
+          {showTitlebar && (
+            <TitleBar
+              title={title}
+              onClose={handleClose}
+              onMinimize={handleMinimize}
+              onMaximize={handleToggleMaximize}
+            />
+          )}
           {children}
         </div>
       </Rnd>
