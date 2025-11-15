@@ -25,4 +25,5 @@ export type WindowData = {
 export type WindowProps = WindowData & {
   children: React.ReactNode;
   onClose?: (id: string) => void;
+  isFocused?: boolean;
 };

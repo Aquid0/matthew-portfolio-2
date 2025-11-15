@@ -18,6 +18,7 @@ export const Window = observer(
     height,
     id,
     zIndex,
+    isFocused,
     isFixed = false,
     variant = "minimal",
   }: WindowProps) => {
@@ -45,7 +46,9 @@ export const Window = observer(
       case "MAXIMISED":
         return (
           <div
-            className="absolute border border-[#65384B] bg-[#110E1D]/80 shadow-md backdrop-blur-lg"
+            className={`absolute border bg-[#110E1D]/80 shadow-md backdrop-blur-lg ${
+              isFocused ? "border-[#7C76C7]/60" : "border-[#65384B]"
+            }`}
             data-window-id={id}
             style={{
               top: 0,
@@ -63,6 +66,7 @@ export const Window = observer(
                 onMinimize={handleMinimize}
                 onMaximize={handleToggleMaximize}
                 variant={variant}
+                isFocused={isFocused}
               />
               {children}
             </div>
@@ -93,7 +97,9 @@ export const Window = observer(
         minWidth={320}
         minHeight={200}
         bounds="window"
-        className="h-1/2 w-1/2 border border-[#65384B] bg-[#110E1D]/80 shadow-md backdrop-blur-lg"
+        className={`h-1/2 w-1/2 border bg-[#110E1D]/80 shadow-md backdrop-blur-lg ${
+          isFocused ? "border-[#7C76C7]/50" : "border-[#65384B]"
+        }`}
         data-window-id={id}
         style={{ zIndex: zIndex }}
         onMouseDown={handleFocus}
@@ -115,6 +121,7 @@ export const Window = observer(
             onClose={handleClose}
             onMinimize={handleMinimize}
             onMaximize={handleToggleMaximize}
+            isFocused={isFocused}
             variant={variant}
           />
           {children}

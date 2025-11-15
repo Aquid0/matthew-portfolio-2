@@ -3,6 +3,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
+import { Terminal } from "@/app/components/Terminal";
 import { useStore } from "@/app/stores/StoreContext";
 import { Desktop } from "@/app/system/Desktop";
 import { Taskbar } from "@/app/system/Taskbar";
@@ -21,7 +22,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-1",
       appId: "test-1",
-      title: "Main Terminal",
+      title: "MAIN TERMINAL",
       x: WINDOW_GAP,
       y: WINDOW_GAP,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
@@ -33,7 +34,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-2",
       appId: "test-2",
-      title: "Quick Actions",
+      title: "QUICK ACTIONS",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
       y: WINDOW_GAP,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
@@ -45,7 +46,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-3",
       appId: "test-3",
-      title: "Sub Terminal",
+      title: "SUB TERMINAL",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
       y: viewportHeight / 2 + WINDOW_GAP / 2,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
@@ -57,10 +58,9 @@ const Home = observer(() => {
 
   return (
     <Desktop>
-      {/* Render windows from the store */}
       {windowStore.windowsWithZIndex.map((windowData) => (
         <Window key={windowData.id} {...windowData}>
-          <h1 className="text-black">Hello from {windowData.title}</h1>
+          <Terminal />
         </Window>
       ))}
       <Taskbar />
