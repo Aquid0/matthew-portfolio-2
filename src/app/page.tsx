@@ -21,7 +21,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-1",
       appId: "test-1",
-      title: "Test Window 1",
+      title: "Main Terminal",
       x: WINDOW_GAP,
       y: WINDOW_GAP,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
@@ -33,7 +33,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-2",
       appId: "test-2",
-      title: "Test Window 2",
+      title: "Quick Actions",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
       y: WINDOW_GAP,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
@@ -45,7 +45,7 @@ const Home = observer(() => {
     windowStore.addWindow({
       id: "test-window-3",
       appId: "test-3",
-      title: "Test Window 3",
+      title: "Sub Terminal",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
       y: viewportHeight / 2 + WINDOW_GAP / 2,
       width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
