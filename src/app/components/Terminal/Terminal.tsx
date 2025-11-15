@@ -25,8 +25,9 @@ export const Terminal = () => {
 
   return (
     <div
-      className="h-full w-full overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
+      className="absolute inset-0 cursor-default overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
       onClick={() => inputRef.current?.focus()}
+      tabIndex={-1}
     >
       {lines.map((line, i) => (
         <div key={i}>

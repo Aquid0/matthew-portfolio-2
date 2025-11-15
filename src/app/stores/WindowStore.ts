@@ -30,6 +30,7 @@ export class WindowStore {
       .map((window, index) => ({
         ...window,
         zIndex: this.MAX_Z_INDEX - index,
+        isFocused: index === 0,
       }));
   }
 

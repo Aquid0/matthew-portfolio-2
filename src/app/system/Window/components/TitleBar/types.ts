@@ -6,4 +6,5 @@ export type TitleBarProps = {
   onMinimize: () => void;
   onMaximize: () => void;
   variant: variant;
+  isFocused?: boolean;
 };

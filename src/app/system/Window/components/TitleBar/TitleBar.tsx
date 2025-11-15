@@ -8,10 +8,15 @@ export const TitleBar = ({
   onMinimize,
   onMaximize,
   variant,
+  isFocused,
 }: TitleBarProps) => {
   if (variant === "minimal") {
     return (
-      <div className="crt-title absolute -top-3 left-2 cursor-default border border-[#65384B] bg-[#110E1D] px-3 py-1 text-xs font-bold text-[#7C76C7] select-none">
+      <div
+        className={`crt-title absolute -top-3 left-2 cursor-default border bg-[#110E1D] px-3 py-1 text-xs font-bold text-[#7C76C7] select-none ${
+          isFocused ? "border-[#7C76C7]/60" : "border-[#65384B]"
+        }`}
+      >
         {title}
       </div>
     );
