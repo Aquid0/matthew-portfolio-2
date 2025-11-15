@@ -3,6 +3,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
+import { Terminal } from "@/app/components/Terminal";
 import { useStore } from "@/app/stores/StoreContext";
 import { Desktop } from "@/app/system/Desktop";
 import { Taskbar } from "@/app/system/Taskbar";
@@ -57,10 +58,9 @@ const Home = observer(() => {
 
   return (
     <Desktop>
-      {/* Render windows from the store */}
       {windowStore.windowsWithZIndex.map((windowData) => (
         <Window key={windowData.id} {...windowData}>
-          <h1 className="text-black">Hello from {windowData.title}</h1>
+          <Terminal />
         </Window>
       ))}
       <Taskbar />
