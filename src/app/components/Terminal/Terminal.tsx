@@ -4,7 +4,7 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import { useStore } from "@/app/stores/StoreContext";
 
-import { commands } from "./commands/registry";
+import { commands } from "./commands/CommandRegistry";
 import { TerminalLine } from "./types";
 
 export const Terminal = ({ windowId }: { windowId: string }) => {
