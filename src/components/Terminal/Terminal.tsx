@@ -1,13 +1,20 @@
 "use client";
 
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  KeyboardEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { useStore } from "@/stores/StoreContext";
 import { TerminalLine } from "@/types/terminal";
 
 import { commands } from "./commands/CommandRegistry";
 
-export const Terminal = ({ windowId }: { windowId: string }) => {
+export const Terminal = memo(({ windowId }: { windowId: string }) => {
   const { terminalStore } = useStore();
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [input, setInput] = useState("");
@@ -115,4 +122,6 @@ export const Terminal = ({ windowId }: { windowId: string }) => {
       </div>
     </div>
   );
-};
+});
+
+Terminal.displayName = "Terminal";

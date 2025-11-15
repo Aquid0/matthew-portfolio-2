@@ -11,7 +11,7 @@ export class WindowStore {
 
   constructor() {
     makeObservable(this, {
-      availableApps: observable,
+      availableApps: observable.shallow,
       taskbarApps: observable,
       taskbarItems: computed,
       addWindow: action,
@@ -48,24 +48,24 @@ export class WindowStore {
   }
 
   addWindow(window: WindowData) {
-    this.availableApps = [window, ...this.availableApps];
+    this.availableApps.unshift(window);
   }
 
   removeWindow(id: string) {
-    this.availableApps = this.availableApps.filter((w) => w.id !== id);
+    const index = this.availableApps.findIndex((w) => w.id === id);
+    if (index !== -1) this.availableApps.splice(index, 1);
   }
 
   minimizeWindow(id: string) {
-    this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, windowState: "MINIMISED" } : w,
-    );
+    const window = this.availableApps.find((w) => w.id === id);
+    if (window) window.windowState = "MINIMISED";
   }
   toggleMaximizeWindow(id: string) {
-    this.availableApps = this.availableApps.map((w) => {
-      if (w.id !== id) return w;
-      const newState = w.windowState === "MAXIMISED" ? "NORMAL" : "MAXIMISED";
-      return { ...w, windowState: newState };
-    });
+    const window = this.availableApps.find((w) => w.id === id);
+    if (window) {
+      window.windowState =
+        window.windowState === "MAXIMISED" ? "NORMAL" : "MAXIMISED";
+    }
   }
 
   updateWindowBounds(
@@ -75,9 +75,13 @@ export class WindowStore {
     width: number,
     height: number,
   ) {
-    this.availableApps = this.availableApps.map((w) =>
-      w.id === id ? { ...w, x, y, width, height } : w,
-    );
+    const window = this.availableApps.find((w) => w.id === id);
+    if (window) {
+      window.x = x;
+      window.y = y;
+      window.width = width;
+      window.height = height;
+    }
   }
 
   focusWindow(id: string) {
@@ -85,7 +89,7 @@ export class WindowStore {
     if (windowIndex === -1) return;
 
     const [focusedWindow] = this.availableApps.splice(windowIndex, 1);
-    this.availableApps = [focusedWindow, ...this.availableApps];
+    this.availableApps.unshift(focusedWindow);
 
     if (focusedWindow.windowState === "MINIMISED") {
       focusedWindow.windowState = "NORMAL";
