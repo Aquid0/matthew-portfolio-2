@@ -135,5 +135,5 @@ body {
 }
 
 .caret-blink {
-  animation: caretBlink 1.25s steps(1) infinite;
+  animation: caretBlink 1.3s steps(1) infinite;
 }
