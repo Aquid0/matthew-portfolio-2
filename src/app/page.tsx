@@ -20,7 +20,7 @@ const Home = observer(() => {
     const viewportHeight = window.innerHeight - 40; // Subtract taskbar height
 
     windowStore.addWindow({
-      id: "test-window-1",
+      id: "main-terminal",
       appId: "test-1",
       title: "MAIN TERMINAL",
       x: WINDOW_GAP,
@@ -32,7 +32,7 @@ const Home = observer(() => {
     });
 
     windowStore.addWindow({
-      id: "test-window-2",
+      id: "quick-actions",
       appId: "test-2",
       title: "QUICK ACTIONS",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
@@ -44,7 +44,7 @@ const Home = observer(() => {
     });
 
     windowStore.addWindow({
-      id: "test-window-3",
+      id: "sub-terminal",
       appId: "test-3",
       title: "SUB TERMINAL",
       x: viewportWidth / 2 + WINDOW_GAP / 2,
@@ -60,7 +60,7 @@ const Home = observer(() => {
     <Desktop>
       {windowStore.windowsWithZIndex.map((windowData) => (
         <Window key={windowData.id} {...windowData}>
-          <Terminal />
+          <Terminal windowId={windowData.id} />
         </Window>
       ))}
       <Taskbar />

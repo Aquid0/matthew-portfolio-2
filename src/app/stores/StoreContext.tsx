@@ -2,13 +2,16 @@
 
 import { createContext, useContext, useState } from "react";
 
+import { TerminalStore } from "./TerminalStore";
 import { WindowStore } from "./WindowStore";
 
 class RootStore {
   windowStore: WindowStore;
+  terminalStore: TerminalStore;
 
   constructor() {
     this.windowStore = new WindowStore();
+    this.terminalStore = new TerminalStore();
   }
 }
 const StoreContext = createContext<RootStore | null>(null);

@@ -122,3 +122,18 @@ body {
   max-height: 100vh;
   overflow: hidden;
 }
+
+@keyframes caretBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.caret-blink {
+  animation: caretBlink 1.25s steps(1) infinite;
+}
