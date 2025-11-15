@@ -2,12 +2,13 @@ import { useStore } from "@/app/stores/StoreContext";
 
 import { asciiArt } from "./ascii-art";
 import { useTypewriter } from "./hooks/useTypewriter";
-import { highlightKeyword } from "./utils/highlightKeyword";
+import { highlightKeywords } from "./utils/highlightKeywords";
 
 export const QuickActions = () => {
   const { terminalStore } = useStore();
   const introText = "Matthew | Front End Engineer Intern @ Amazon";
-  const summary = "Building high impact, large-scale applications with React";
+  const summary =
+    "Specializing in React, TypeScript, and modern web development";
 
   const displayedText = useTypewriter(introText);
   const displayedText2 = useTypewriter(summary, 35, introText.length * 35);
@@ -22,15 +23,16 @@ export const QuickActions = () => {
     <div className="my-3 -ml-2 border border-dashed border-[#2D2B40] p-4">
       <div className="text-center text-[#E0DEF4]/80">
         <p>
-          {highlightKeyword(
-            displayedText,
-            introText,
-            "Amazon",
-            "text-[#FF9900]",
-          )}
+          {highlightKeywords(displayedText, introText, {
+            keyword: "Amazon",
+            color: "text-[#FF9900]",
+          })}
         </p>
         <p className="text-sm">
-          {highlightKeyword(displayedText2, summary, "React", "text-[#61DBFB]")}
+          {highlightKeywords(displayedText2, summary, [
+            { keyword: "React", color: "text-[#61DBFB]" },
+            { keyword: "TypeScript", color: "text-[#007acc]" },
+          ])}
           {displayedText.length >= introText.length && (
             <span className="caret-blink text-lg">▋</span>
           )}
