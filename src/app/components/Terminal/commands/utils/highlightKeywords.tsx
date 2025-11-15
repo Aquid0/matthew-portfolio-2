@@ -64,7 +64,7 @@ export const highlightKeywords = (
     <>
       {parts.map((part, index) =>
         part.color ? (
-          <span key={index} className={part.color}>
+          <span key={index} className={`crt-title ${part.color}`}>
             {part.text}
           </span>
         ) : (
