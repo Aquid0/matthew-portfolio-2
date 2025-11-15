@@ -1,7 +1,13 @@
 import { action, makeObservable, observable } from "mobx";
 
+type Terminal = {
+  executeCommand: (cmd: string) => void;
+  commandHistory: string[];
+  historyIndex: number;
+};
+
 export class TerminalStore {
-  terminals: Map<string, (cmd: string) => void> = new Map();
+  terminals: Map<string, Terminal> = new Map();
 
   constructor() {
     makeObservable(this, {
@@ -9,11 +15,18 @@ export class TerminalStore {
       registerTerminal: action,
       unregisterTerminal: action,
       executeInTerminal: action,
+      addToHistory: action,
+      getPreviousCommand: action,
+      getNextCommand: action,
     });
   }
 
   registerTerminal(terminalId: string, executeCommand: (cmd: string) => void) {
-    this.terminals.set(terminalId, executeCommand);
+    this.terminals.set(terminalId, {
+      executeCommand,
+      commandHistory: [],
+      historyIndex: -1,
+    });
   }
 
   unregisterTerminal(terminalId: string) {
@@ -21,7 +34,38 @@ export class TerminalStore {
   }
 
   executeInTerminal(terminalId: string, cmd: string) {
-    const executeCommand = this.terminals.get(terminalId);
-    executeCommand?.(cmd);
+    const terminal = this.terminals.get(terminalId);
+    if (terminal) {
+      this.addToHistory(terminalId, cmd);
+      terminal.executeCommand(cmd);
+    }
+  }
+
+  addToHistory(terminalId: string, cmd: string) {
+    const terminal = this.terminals.get(terminalId);
+    if (terminal && cmd.trim()) {
+      terminal.commandHistory.push(cmd);
+      terminal.historyIndex = terminal.commandHistory.length;
+    }
+  }
+
+  getPreviousCommand(terminalId: string): string | undefined {
+    const terminal = this.terminals.get(terminalId);
+    if (terminal && terminal.historyIndex > 0) {
+      terminal.historyIndex--;
+      return terminal.commandHistory[terminal.historyIndex];
+    }
+  }
+
+  getNextCommand(terminalId: string): string | undefined {
+    const terminal = this.terminals.get(terminalId);
+    if (
+      terminal &&
+      terminal.historyIndex < terminal.commandHistory.length - 1
+    ) {
+      terminal.historyIndex++;
+      return terminal.commandHistory[terminal.historyIndex];
+    }
+    return "";
   }
 }
