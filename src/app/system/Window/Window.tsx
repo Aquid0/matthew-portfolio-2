@@ -19,7 +19,7 @@ export const Window = observer(
     id,
     zIndex,
     isFixed = false,
-    showTitlebar = true,
+    variant = "minimal",
   }: WindowProps) => {
     const { windowStore } = useStore();
 
@@ -45,7 +45,7 @@ export const Window = observer(
       case "MAXIMISED":
         return (
           <div
-            className="absolute bg-white shadow-md"
+            className="absolute border border-[#65384B] bg-[#110E1D]/80 shadow-md backdrop-blur-lg"
             data-window-id={id}
             style={{
               top: 0,
@@ -62,6 +62,7 @@ export const Window = observer(
                 onClose={handleClose}
                 onMinimize={handleMinimize}
                 onMaximize={handleToggleMaximize}
+                variant={variant}
               />
               {children}
             </div>
@@ -79,6 +80,7 @@ export const Window = observer(
           windowStore.updateWindowBounds(id, d.x, d.y, width, height);
         }}
         disableDragging={isFixed}
+        enableResizing={!isFixed}
         onResizeStop={(e, direction, ref, delta, position) => {
           windowStore.updateWindowBounds(
             id,
@@ -91,7 +93,7 @@ export const Window = observer(
         minWidth={320}
         minHeight={200}
         bounds="window"
-        className="h-1/2 w-1/2 bg-white shadow-md"
+        className="h-1/2 w-1/2 border border-[#65384B] bg-[#110E1D]/80 shadow-md backdrop-blur-lg"
         data-window-id={id}
         style={{ zIndex: zIndex }}
         onMouseDown={handleFocus}
@@ -108,14 +110,13 @@ export const Window = observer(
         }}
       >
         <div data-window-content={id}>
-          {showTitlebar && (
-            <TitleBar
-              title={title}
-              onClose={handleClose}
-              onMinimize={handleMinimize}
-              onMaximize={handleToggleMaximize}
-            />
-          )}
+          <TitleBar
+            title={title}
+            onClose={handleClose}
+            onMinimize={handleMinimize}
+            onMaximize={handleToggleMaximize}
+            variant={variant}
+          />
           {children}
         </div>
       </Rnd>

@@ -28,7 +28,6 @@ const Home = observer(() => {
       height: viewportHeight - WINDOW_GAP * 2,
       windowState: "NORMAL",
       isFixed: true,
-      showTitlebar: false,
     });
 
     windowStore.addWindow({
@@ -41,7 +40,6 @@ const Home = observer(() => {
       height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
       windowState: "NORMAL",
       isFixed: true,
-      showTitlebar: false,
     });
 
     windowStore.addWindow({
@@ -54,7 +52,6 @@ const Home = observer(() => {
       height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
       windowState: "NORMAL",
       isFixed: true,
-      showTitlebar: false,
     });
   }, [windowStore]);
 
