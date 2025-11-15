@@ -2,10 +2,10 @@
 
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
-import { useStore } from "@/app/stores/StoreContext";
+import { useStore } from "@/stores/StoreContext";
+import { TerminalLine } from "@/types/terminal";
 
 import { commands } from "./commands/CommandRegistry";
-import { TerminalLine } from "./types";
 
 export const Terminal = ({ windowId }: { windowId: string }) => {
   const { terminalStore } = useStore();

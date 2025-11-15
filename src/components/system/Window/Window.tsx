@@ -3,10 +3,10 @@
 import { observer } from "mobx-react-lite";
 import { Rnd } from "react-rnd";
 
-import { useStore } from "@/app/stores/StoreContext";
+import { useStore } from "@/stores/StoreContext";
+import type { WindowProps } from "@/types/window";
 
 import { TitleBar } from "./components/TitleBar";
-import type { WindowProps } from "./types";
 
 export const Window = observer(
   ({

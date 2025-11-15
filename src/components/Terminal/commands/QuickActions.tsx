@@ -1,4 +1,4 @@
-import { useStore } from "@/app/stores/StoreContext";
+import { useStore } from "@/stores/StoreContext";
 
 import { asciiArt } from "./ascii-art";
 import { useTypewriter } from "./hooks/useTypewriter";

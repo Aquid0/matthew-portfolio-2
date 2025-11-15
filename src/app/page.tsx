@@ -3,11 +3,11 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
-import { Terminal } from "@/app/components/Terminal";
-import { useStore } from "@/app/stores/StoreContext";
-import { Desktop } from "@/app/system/Desktop";
-import { Taskbar } from "@/app/system/Taskbar";
-import { Window } from "@/app/system/Window";
+import { Desktop } from "@/components/system/Desktop";
+import { Taskbar } from "@/components/system/Taskbar";
+import { Window } from "@/components/system/Window";
+import { Terminal } from "@/components/Terminal";
+import { useStore } from "@/stores/StoreContext";
 
 const WINDOW_GAP = 16;
 

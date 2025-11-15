@@ -4,8 +4,8 @@ import StartIcon from "@public/start.svg";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 
-import { Icon } from "@/app/components/Icon";
-import { useStore } from "@/app/stores/StoreContext";
+import { Icon } from "@/components/Icon";
+import { useStore } from "@/stores/StoreContext";
 
 export const Taskbar = observer(() => {
   const { windowStore } = useStore();
