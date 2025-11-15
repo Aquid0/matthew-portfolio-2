@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react";
-
 import { useStore } from "@/app/stores/StoreContext";
 
 import { asciiArt } from "./ascii-art";
+import { useTypewriter } from "./hooks/useTypewriter";
+import { highlightKeyword } from "./utils/highlightKeyword";
 
 export const QuickActions = () => {
   const { terminalStore } = useStore();
-  const [displayedText, setDisplayedText] = useState("");
-  const fullText = "Matthew | Front End Engineer Intern @ Amazon";
+  const introText = "Matthew | Front End Engineer Intern @ Amazon";
+  const summary = "Building high impact, large-scale applications with React";
 
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index <= fullText.length) {
-        setDisplayedText(fullText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 35);
-
-    return () => clearInterval(interval);
-  }, []);
+  const displayedText = useTypewriter(introText);
+  const displayedText2 = useTypewriter(summary, 35, introText.length * 35);
   const links = [
     { label: "About", command: "about" },
     { label: "Projects", command: "projects" },
@@ -31,25 +20,22 @@ export const QuickActions = () => {
 
   return (
     <div className="my-3 -ml-2 border border-dashed border-[#2D2B40] p-4">
-      <p className="text-center text-[#E0DEF4]">
-        {(() => {
-          const amazonIndex = fullText.indexOf("Amazon");
-          const beforeAmazon = displayedText.slice(0, amazonIndex);
-          const amazonPart = displayedText.slice(amazonIndex, amazonIndex + 6);
-          const afterAmazon = displayedText.slice(amazonIndex + 6);
-
-          return (
-            <>
-              {beforeAmazon}
-              {amazonPart && (
-                <span className="text-[#FF9900]">{amazonPart}</span>
-              )}
-              {afterAmazon}
-              <span className="caret-blink"> ▋</span>
-            </>
-          );
-        })()}
-      </p>
+      <div className="text-center text-[#E0DEF4]/80">
+        <p>
+          {highlightKeyword(
+            displayedText,
+            introText,
+            "Amazon",
+            "text-[#FF9900]",
+          )}
+        </p>
+        <p className="text-sm">
+          {highlightKeyword(displayedText2, summary, "React", "text-[#61DBFB]")}
+          {displayedText.length >= introText.length && (
+            <span className="caret-blink text-lg">▋</span>
+          )}
+        </p>
+      </div>
 
       <div className="flex-col gap-8">
         <pre className="text-center text-xs leading-tight text-white">
