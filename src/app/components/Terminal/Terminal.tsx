@@ -2,14 +2,36 @@
 
 import { KeyboardEvent, useRef, useState } from "react";
 
+import { commands } from "./commands/registry";
+import { TerminalLine } from "./types";
+
 export const Terminal = () => {
-  const [lines, setLines] = useState<string[]>([]);
+  const [lines, setLines] = useState<TerminalLine[]>([]);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setLines((prev) => [...prev, input]);
+      const trimmed = input.trim();
+
+      setLines((prev) => [...prev, { type: "input", content: trimmed }]);
+
+      const [cmd, ...args] = trimmed.split(" ");
+
+      if (cmd === "clear") {
+        setLines([]);
+      } else if (commands[cmd]) {
+        const output = commands[cmd](args);
+        if (output) {
+          setLines((prev) => [...prev, { type: "output", content: output }]);
+        }
+      } else if (trimmed) {
+        setLines((prev) => [
+          ...prev,
+          { type: "output", content: `Command not found: ${cmd}` },
+        ]);
+      }
+
       setInput("");
     }
   };
@@ -31,7 +53,13 @@ export const Terminal = () => {
     >
       {lines.map((line, i) => (
         <div key={i}>
-          <Prompt /> {line}
+          {line.type === "input" && (
+            <>
+              <Prompt /> {line.content}
+            </>
+          )}
+          {line.type === "output" && <div className="ml-2">{line.content}</div>}
+          {line.type === "component" && line.content}
         </div>
       ))}
       <div className="flex gap-2">
