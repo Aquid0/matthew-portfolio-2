@@ -70,7 +70,6 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
 
   useEffect(() => {
     terminalStore.registerTerminal(windowId, executeCommand);
-    return () => terminalStore.unregisterTerminal(windowId);
   }, [windowId, terminalStore, executeCommand]);
 
   useEffect(() => {

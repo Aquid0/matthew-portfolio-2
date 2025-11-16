@@ -22,11 +22,16 @@ export class TerminalStore {
   }
 
   registerTerminal(terminalId: string, executeCommand: (cmd: string) => void) {
-    this.terminals.set(terminalId, {
-      executeCommand,
-      commandHistory: [""],
-      historyIndex: -1,
-    });
+    if (!this.terminals.has(terminalId)) {
+      this.terminals.set(terminalId, {
+        executeCommand,
+        commandHistory: [""],
+        historyIndex: -1,
+      });
+    } else {
+      const existing = this.terminals.get(terminalId)!;
+      existing.executeCommand = executeCommand; // Update the function property under closure
+    }
   }
 
   unregisterTerminal(terminalId: string) {
