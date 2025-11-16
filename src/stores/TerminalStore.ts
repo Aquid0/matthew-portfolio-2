@@ -24,7 +24,7 @@ export class TerminalStore {
   registerTerminal(terminalId: string, executeCommand: (cmd: string) => void) {
     this.terminals.set(terminalId, {
       executeCommand,
-      commandHistory: [],
+      commandHistory: [""],
       historyIndex: -1,
     });
   }
@@ -47,6 +47,7 @@ export class TerminalStore {
       terminal.commandHistory.push(cmd);
       terminal.historyIndex = terminal.commandHistory.length;
     }
+    console.log(terminal?.historyIndex);
   }
 
   getPreviousCommand(terminalId: string): string | undefined {
@@ -61,7 +62,7 @@ export class TerminalStore {
     const terminal = this.terminals.get(terminalId);
     if (
       terminal &&
-      terminal.historyIndex < terminal.commandHistory.length - 1
+      terminal.historyIndex <= terminal.commandHistory.length - 1
     ) {
       terminal.historyIndex++;
       return terminal.commandHistory[terminal.historyIndex];

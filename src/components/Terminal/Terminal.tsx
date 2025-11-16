@@ -11,6 +11,7 @@ import {
 
 import { useStore } from "@/stores/StoreContext";
 import { TerminalLine } from "@/types/terminal";
+import { moveCursorToEnd } from "@/utils/input";
 
 import { commands } from "./commands/CommandRegistry";
 
@@ -55,29 +56,23 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
   }, [windowId, terminalStore, executeCommand]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      executeCommand(input);
-      setInput("");
-    } else if (e.key === "ArrowUp") {
-      const lastCmd = terminalStore.getPreviousCommand(windowId);
-      setInput(lastCmd || "");
-
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.selectionStart = inputRef.current.value.length;
-          inputRef.current.selectionEnd = inputRef.current.value.length;
-        }
-      }, 0);
-    } else if (e.key === "ArrowDown") {
-      const nextCmd = terminalStore.getNextCommand(windowId);
-      setInput(nextCmd || "");
-
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.selectionStart = inputRef.current.value.length;
-          inputRef.current.selectionEnd = inputRef.current.value.length;
-        }
-      }, 0);
+    switch (e.key) {
+      case "Enter":
+        executeCommand(input);
+        setInput("");
+        break;
+      case "ArrowUp":
+        const lastCmd = terminalStore.getPreviousCommand(windowId);
+        setInput(lastCmd || "");
+        moveCursorToEnd(inputRef.current);
+        break;
+      case "ArrowDown":
+        const nextCmd = terminalStore.getNextCommand(windowId);
+        setInput(nextCmd || "");
+        moveCursorToEnd(inputRef.current);
+        break;
+      default:
+        return;
     }
   };
 
