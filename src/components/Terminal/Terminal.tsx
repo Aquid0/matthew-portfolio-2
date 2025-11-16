@@ -20,6 +20,17 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      }
+    }, 100);
+    // TODO: This waits for the new input line to load, and then we scroll to the bottom. There needs
+    // to be a better solution here
+  };
 
   const executeCommand = useCallback(
     (cmd: string) => {
@@ -46,6 +57,7 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
       if (output) {
         setLines((prev) => [...prev, { type: "output", content: output }]);
       }
+      scrollToBottom();
     },
     [windowId, terminalStore],
   );
@@ -87,6 +99,7 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
 
   return (
     <div
+      ref={containerRef}
       className="absolute inset-0 cursor-default overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
       onClick={() => inputRef.current?.focus()}
       tabIndex={-1}
@@ -111,7 +124,7 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-1 bg-transparent text-[#E0DEF4] outline-none"
+          className="flex-1 cursor-default bg-transparent text-[#E0DEF4] outline-none"
           autoFocus
         />
       </div>

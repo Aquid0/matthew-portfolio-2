@@ -28,14 +28,16 @@ export const QuickActions = () => {
             color: "text-[#FF9900]",
           })}
         </p>
-        <p className="text-sm">
-          {highlightKeywords(displayedText2, summary, [
+        <p className="min-h-[1.25rem] text-sm">
+          {highlightKeywords(displayedText2 || "", summary, [
             { keyword: "React", color: "text-[#61DBFB]" },
             { keyword: "TypeScript", color: "text-[#007acc]" },
           ])}
-          {displayedText.length >= introText.length && (
-            <span className="caret-blink text-lg">▋</span>
-          )}
+          <span
+            className={`text-lg ${displayedText.length >= introText.length ? "caret-blink" : "invisible"}`}
+          >
+            ▋
+          </span>
         </p>
       </div>
 
