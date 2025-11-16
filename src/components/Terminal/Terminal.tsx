@@ -5,6 +5,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -21,12 +22,17 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollPositionRef = useRef(0);
+  const focusInput = useCallback(() => {
+    if (!inputRef.current) return;
+    inputRef.current.focus({ preventScroll: true });
+  }, []);
 
   const scrollToBottom = () => {
     setTimeout(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollTop = containerRef.current.scrollHeight;
-      }
+      if (!containerRef.current) return;
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      scrollPositionRef.current = containerRef.current.scrollTop;
     }, 100);
     // TODO: This waits for the new input line to load, and then we scroll to the bottom. There needs
     // to be a better solution here
@@ -67,6 +73,21 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
     return () => terminalStore.unregisterTerminal(windowId);
   }, [windowId, terminalStore, executeCommand]);
 
+  useEffect(() => {
+    focusInput();
+  }, [focusInput]);
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = scrollPositionRef.current;
+    }
+  });
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    scrollPositionRef.current = containerRef.current.scrollTop;
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case "Enter":
@@ -101,7 +122,8 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
     <div
       ref={containerRef}
       className="absolute inset-0 cursor-default overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
-      onClick={() => inputRef.current?.focus()}
+      onScroll={handleScroll}
+      onClick={focusInput}
       tabIndex={-1}
     >
       {lines.map((line, i) => (
@@ -125,7 +147,6 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="flex-1 cursor-default bg-transparent text-[#E0DEF4] outline-none"
-          autoFocus
         />
       </div>
     </div>
