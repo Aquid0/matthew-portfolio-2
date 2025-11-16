@@ -54,6 +54,7 @@ const Home = observer(() => {
       height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
       windowState: "NORMAL",
       isFixed: true,
+      initialCommand: "help",
     });
   }, [windowStore, terminalStore]);
 
