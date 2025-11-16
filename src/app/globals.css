@@ -118,3 +118,13 @@ body {
 .caret-blink {
   animation: caretBlink 1.3s steps(1) infinite;
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

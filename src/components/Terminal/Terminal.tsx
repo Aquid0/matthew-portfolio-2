@@ -129,7 +129,7 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 cursor-default overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
+      className="scrollbar-hide absolute inset-0 cursor-default overflow-auto px-2 pt-4 font-mono text-sm text-[#E0DEF4]"
       onScroll={handleScroll}
       onClick={focusInput}
       tabIndex={-1}
