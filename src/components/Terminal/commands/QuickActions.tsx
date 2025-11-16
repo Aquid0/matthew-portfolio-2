@@ -1,10 +1,9 @@
 import { useStore } from "@/stores/StoreContext";
 
-import { asciiArt } from "./ascii-art";
+import { TYPE_SPEED } from "./constants";
+import { asciiArt } from "./data/ascii-art";
 import { useTypewriter } from "./hooks/useTypewriter";
 import { highlightKeywords } from "./utils/highlightKeywords";
-
-const TYPE_SPEED = 35; // ms
 
 export const QuickActions = () => {
   const { terminalStore } = useStore();
