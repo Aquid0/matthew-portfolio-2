@@ -4,6 +4,8 @@ import { asciiArt } from "./ascii-art";
 import { useTypewriter } from "./hooks/useTypewriter";
 import { highlightKeywords } from "./utils/highlightKeywords";
 
+const TYPE_SPEED = 35; // ms
+
 export const QuickActions = () => {
   const { terminalStore } = useStore();
   const introText = "Matthew | Front End Engineer Intern @ Amazon";
@@ -11,12 +13,17 @@ export const QuickActions = () => {
     "Specializing in React, TypeScript, and modern web development";
 
   const displayedText = useTypewriter(introText);
-  const displayedText2 = useTypewriter(summary, 35, introText.length * 35);
+  const displayedText2 = useTypewriter(
+    summary,
+    TYPE_SPEED,
+    introText.length * TYPE_SPEED,
+  );
   const links = [
     { label: "About", command: "about" },
     { label: "Projects", command: "projects" },
     { label: "Skills", command: "skills" },
     { label: "Contact", command: "contact" },
+    { label: "Quick Actions", command: "quick_actions" },
   ];
 
   return (
