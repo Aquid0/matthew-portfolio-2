@@ -1,6 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 
-import type { WindowData } from "@/app/system/Window/types";
+import type { WindowData } from "@/types/window";
 
 export type IconVariant = "taskbar" | "window";
 

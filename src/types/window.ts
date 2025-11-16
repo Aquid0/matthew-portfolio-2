@@ -1,4 +1,4 @@
-import type { AppId } from "@/app/stores/types";
+import type { AppId } from "@/types/store";
 
 export type WindowState = "MINIMISED" | "MAXIMISED" | "NORMAL";
 
@@ -20,6 +20,7 @@ export type WindowData = {
   prevHeight?: number;
   isFixed?: boolean;
   variant?: variant;
+  initialCommand?: string;
 };
 
 export type WindowProps = WindowData & {

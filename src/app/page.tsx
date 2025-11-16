@@ -12,7 +12,7 @@ import { useStore } from "@/stores/StoreContext";
 const WINDOW_GAP = 16;
 
 const Home = observer(() => {
-  const { windowStore } = useStore();
+  const { windowStore, terminalStore } = useStore();
 
   // Add initial windows when component mounts
   useEffect(() => {
@@ -41,6 +41,7 @@ const Home = observer(() => {
       height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
       windowState: "NORMAL",
       isFixed: true,
+      initialCommand: "quick_actions",
     });
 
     windowStore.addWindow({
@@ -54,13 +55,16 @@ const Home = observer(() => {
       windowState: "NORMAL",
       isFixed: true,
     });
-  }, [windowStore]);
+  }, [windowStore, terminalStore]);
 
   return (
     <Desktop>
       {windowStore.windowsWithZIndex.map((windowData) => (
         <Window key={windowData.id} {...windowData}>
-          <Terminal windowId={windowData.id} />
+          <Terminal
+            windowId={windowData.id}
+            initialCommand={windowData.initialCommand}
+          />
         </Window>
       ))}
       <Taskbar />

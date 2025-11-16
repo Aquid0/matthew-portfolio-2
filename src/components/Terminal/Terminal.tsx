@@ -15,14 +15,19 @@ import { TerminalLine } from "@/types/terminal";
 import { moveCursorToEnd } from "@/utils/input";
 
 import { commands } from "./commands/CommandRegistry";
+import { TerminalProps } from "./types";
 
-export const Terminal = memo(({ windowId }: { windowId: string }) => {
+export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
   const { terminalStore } = useStore();
+
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [input, setInput] = useState("");
+
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollPositionRef = useRef(0);
+  const hasRunInitialCommand = useRef(false);
+
   const focusInput = useCallback(() => {
     if (!inputRef.current) return;
     inputRef.current.focus({ preventScroll: true });
@@ -70,7 +75,11 @@ export const Terminal = memo(({ windowId }: { windowId: string }) => {
 
   useEffect(() => {
     terminalStore.registerTerminal(windowId, executeCommand);
-  }, [windowId, terminalStore, executeCommand]);
+    if (initialCommand && !hasRunInitialCommand.current) {
+      hasRunInitialCommand.current = true;
+      executeCommand(initialCommand);
+    }
+  }, [windowId, terminalStore, executeCommand, initialCommand]);
 
   useEffect(() => {
     focusInput();
