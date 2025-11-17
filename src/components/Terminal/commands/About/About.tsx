@@ -1,4 +1,5 @@
-import { highlightKeywords } from "../../../../utils/highlightKeywords";
+import { highlightKeywords } from "@/utils/";
+
 import { TYPE_SPEED } from "../../constants";
 import { useTypewriter } from "../../hooks/useTypewriter";
 

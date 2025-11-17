@@ -76,8 +76,6 @@ export const Window = observer(
         onDragStop={(e, d) => {
           windowStore.updateWindowBounds(id, d.x, d.y, width, height);
         }}
-        disableDragging={isFixed}
-        enableResizing={!isFixed}
         onResizeStop={(e, direction, ref, delta, position) => {
           windowStore.updateWindowBounds(
             id,

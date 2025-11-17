@@ -1,8 +1,7 @@
 import { useStore } from "@/stores/StoreContext";
-import { lastCommit } from "@/utils/getLastCommit";
+import { highlightKeywords, lastCommit } from "@/utils/";
 
-import { highlightKeywords } from "../../../../utils/highlightKeywords";
-import { asciiArt, TYPE_SPEED } from "../../constants";
+import { ASCII_ART, QUICK_ACTION_LINKS, TYPE_SPEED } from "../../constants";
 import { useTypewriter } from "../../hooks/useTypewriter";
 
 export const QuickActions = () => {
@@ -17,13 +16,6 @@ export const QuickActions = () => {
     TYPE_SPEED,
     introText.length * TYPE_SPEED,
   );
-  const links = [
-    { label: "About", command: "about" },
-    { label: "Projects", command: "projects" },
-    { label: "Skills", command: "skills" },
-    { label: "Contact", command: "contact" },
-    { label: "Quick Actions", command: "quick_actions" },
-  ];
 
   return (
     <div className="crt-text my-3 -ml-2 border border-dashed border-[#2D2B40] p-4">
@@ -49,11 +41,11 @@ export const QuickActions = () => {
 
       <div className="flex-col gap-8">
         <pre className="mb-1 text-center text-xs leading-tight text-white">
-          {asciiArt}
+          {ASCII_ART}
         </pre>
 
         <div className="flex justify-center gap-2">
-          {links.map((link) => (
+          {QUICK_ACTION_LINKS.map((link) => (
             <button
               key={link.command}
               onClick={() =>
