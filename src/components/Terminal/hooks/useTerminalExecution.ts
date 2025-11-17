@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import { TerminalStore } from "@/stores/TerminalStore";
 import { WindowStore } from "@/stores/WindowStore";
 import { TerminalLine } from "@/types/terminal";
+import { highlightKeywords } from "@/utils/";
 
-import { highlightKeywords } from "../../../utils/highlightKeywords";
 import { commands } from "../commands/CommandRegistry";
 
 export const useTerminalExecution = (

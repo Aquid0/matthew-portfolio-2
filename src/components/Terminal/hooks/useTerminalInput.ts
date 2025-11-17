@@ -1,7 +1,7 @@
 import { KeyboardEvent } from "react";
 
 import { TerminalStore } from "@/stores/TerminalStore";
-import { moveCursorToEnd } from "@/utils/input";
+import { moveCursorToEnd } from "@/utils/";
 
 export const useTerminalInput = (
   windowId: string,
