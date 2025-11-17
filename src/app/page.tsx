@@ -52,15 +52,9 @@ const Home = observer(() => {
     });
   }, [windowStore]);
 
-  const mainTerminal = windowStore.windowsWithZIndex.find(
-    (w) => w.id === "main-terminal",
-  );
-  const quickActions = windowStore.windowsWithZIndex.find(
-    (w) => w.id === "quick-actions",
-  );
-  const subTerminal = windowStore.windowsWithZIndex.find(
-    (w) => w.id === "sub-terminal",
-  );
+  const mainTerminal = windowStore.getWindow("main-terminal");
+  const quickActions = windowStore.getWindow("quick-actions");
+  const subTerminal = windowStore.getWindow("sub-terminal");
 
   return (
     <Desktop>
