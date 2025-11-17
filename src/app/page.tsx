@@ -53,7 +53,6 @@ const Home = observer(() => {
     });
 
     // Set initial view as maximised main terminal
-
     windowStore.toggleMaximizeWindow("main-terminal");
   }, [windowStore]);
 

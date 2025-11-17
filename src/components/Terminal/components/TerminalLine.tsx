@@ -7,21 +7,18 @@ type TerminalLineProps = {
 };
 
 export const TerminalLine = ({ line }: TerminalLineProps) => {
-  if (line.type === "input") {
-    return (
-      <>
-        <Prompt /> {line.content}
-      </>
-    );
+  switch (line.type) {
+    case "input":
+      return (
+        <>
+          <Prompt /> {line.content}
+        </>
+      );
+    case "output":
+      return <div className="ml-2">{line.content}</div>;
+    case "component":
+      return <>{line.content}</>;
+    default:
+      return null;
   }
-
-  if (line.type === "output") {
-    return <div className="ml-2">{line.content}</div>;
-  }
-
-  if (line.type === "component") {
-    return <>{line.content}</>;
-  }
-
-  return null;
 };
