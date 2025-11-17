@@ -72,11 +72,6 @@ export const QuickActions = () => {
             <span className="opacity-70">Last Updated</span>
             <span>{lastCommit.date}</span>
           </div>
-
-          <div className="flex flex-col items-center">
-            <span className="opacity">Commit</span>
-            <span>{lastCommit.message}</span>
-          </div>
         </div>
       </div>
     </div>
