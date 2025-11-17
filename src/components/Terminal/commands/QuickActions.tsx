@@ -1,4 +1,5 @@
 import { useStore } from "@/stores/StoreContext";
+import { lastCommit } from "@/utils/getLastCommit";
 
 import { TYPE_SPEED } from "./constants";
 import { asciiArt } from "./data/ascii-art";
@@ -64,6 +65,18 @@ export const QuickActions = () => {
               [ {link.label} ]
             </button>
           ))}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between text-[9px] text-[#E0DEF4]/50">
+          <div className="flex flex-col text-center font-mono">
+            <span className="opacity-70">Last Updated</span>
+            <span>{lastCommit.date}</span>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <span className="opacity">Commit</span>
+            <span>{lastCommit.message}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build --turbopack",
+    "dev": "node scripts/generate-commit-info.js && next dev",
+    "build": "node scripts/generate-commit-info.js && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
@@ -46,5 +46,6 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "type": "module"
 }
