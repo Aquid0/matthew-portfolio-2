@@ -60,7 +60,7 @@ const Home = observer(() => {
     <Desktop>
       {mainTerminal && (
         <div
-          className={windowStore.viewMode === "projects" ? "" : "row-span-2"}
+          className={`${!windowStore.fullscreenWindowId ? "row-span-2" : ""} ${windowStore.fullscreenWindowId && windowStore.fullscreenWindowId !== "main-terminal" ? "hidden" : ""}`}
         >
           <Window {...mainTerminal}>
             <Terminal
@@ -70,21 +70,39 @@ const Home = observer(() => {
           </Window>
         </div>
       )}
-      {windowStore.viewMode === "default" && quickActions && (
-        <Window {...quickActions}>
-          <Terminal
-            windowId={quickActions.id}
-            initialCommand={quickActions.initialCommand}
-          />
-        </Window>
+      {quickActions && (
+        <div
+          className={
+            windowStore.fullscreenWindowId &&
+            windowStore.fullscreenWindowId !== "quick-actions"
+              ? "hidden"
+              : ""
+          }
+        >
+          <Window {...quickActions}>
+            <Terminal
+              windowId={quickActions.id}
+              initialCommand={quickActions.initialCommand}
+            />
+          </Window>
+        </div>
       )}
-      {windowStore.viewMode === "default" && subTerminal && (
-        <Window {...subTerminal}>
-          <Terminal
-            windowId={subTerminal.id}
-            initialCommand={subTerminal.initialCommand}
-          />
-        </Window>
+      {subTerminal && (
+        <div
+          className={
+            windowStore.fullscreenWindowId &&
+            windowStore.fullscreenWindowId !== "sub-terminal"
+              ? "hidden"
+              : ""
+          }
+        >
+          <Window {...subTerminal}>
+            <Terminal
+              windowId={subTerminal.id}
+              initialCommand={subTerminal.initialCommand}
+            />
+          </Window>
+        </div>
       )}
       <Taskbar />
     </Desktop>

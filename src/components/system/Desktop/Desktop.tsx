@@ -10,9 +10,9 @@ export const Desktop = observer(
     const { windowStore } = useStore();
 
     return (
-      <div className="crt-effect crt-text h-full w-full bg-[url('/desktop.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
+      <div className="crt-effect h-full w-full bg-[url('/desktop.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
         <div
-          className={`grid h-[calc(100%-40px)] gap-4 p-4 ${windowStore.viewMode === "projects" ? "grid-cols-1 grid-rows-1" : "grid-cols-2 grid-rows-2"}`}
+          className={`grid h-[calc(100%-40px)] gap-4 p-4 ${windowStore.fullscreenWindowId ? "grid-cols-1 grid-rows-1" : "grid-cols-2 grid-rows-2"}`}
         >
           {children}
         </div>
