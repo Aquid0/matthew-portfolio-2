@@ -1,110 +1,49 @@
 "use client";
 
-import {
-  KeyboardEvent,
-  memo,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { useStore } from "@/stores/StoreContext";
-import { TerminalLine } from "@/types/terminal";
-import { moveCursorToEnd } from "@/utils/input";
+import { TerminalLine as TerminalLineType } from "@/types/terminal";
 
-import { commands } from "./commands/CommandRegistry";
-import { highlightKeywords } from "./commands/utils/highlightKeywords";
+import { Prompt } from "./components/Prompt";
+import { TerminalLine } from "./components/TerminalLine";
+import { useTerminalExecution } from "./hooks/useTerminalExecution";
+import { useTerminalInput } from "./hooks/useTerminalInput";
+import { useTerminalScroll } from "./hooks/useTerminalScroll";
 import { TerminalProps } from "./types";
 
 export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
   const { terminalStore, windowStore } = useStore();
 
-  const [lines, setLines] = useState<TerminalLine[]>([]);
+  const [lines, setLines] = useState<TerminalLineType[]>([]);
   const [input, setInput] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollPositionRef = useRef(0);
   const hasRunInitialCommand = useRef(false);
+
+  const { containerRef, scrollToBottom, handleScroll } = useTerminalScroll();
+
+  const executeCommand = useTerminalExecution(
+    windowId,
+    terminalStore,
+    windowStore,
+    setLines,
+    scrollToBottom,
+  );
+
+  const handleKeyDown = useTerminalInput(
+    windowId,
+    terminalStore,
+    input,
+    setInput,
+    executeCommand,
+    inputRef,
+  );
 
   const focusInput = useCallback(() => {
     if (!inputRef.current) return;
     inputRef.current.focus({ preventScroll: true });
   }, []);
-
-  const scrollToBottom = () => {
-    setTimeout(() => {
-      if (!containerRef.current) return;
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-      scrollPositionRef.current = containerRef.current.scrollTop;
-    }, 100);
-    // TODO: This waits for the new input line to load, and then we scroll to the bottom. There needs
-    // to be a better solution here
-  };
-
-  const executeCommand = useCallback(
-    (cmd: string) => {
-      const trimmed = cmd.trim();
-      terminalStore.addToHistory(windowId, trimmed);
-      setLines((prev) => [...prev, { type: "input", content: trimmed }]);
-
-      const [command, ...args] = trimmed.split(" ");
-
-      if (command === "full") {
-        const currentWindow = windowStore.getWindow(windowId);
-        const wasMaximized = currentWindow?.windowState === "MAXIMISED";
-        windowStore.toggleMaximizeWindow(windowId);
-        if (wasMaximized) {
-          const text = "TERMINAL VIEW ENABLED";
-          setLines((prev) => [
-            ...prev,
-            {
-              type: "component",
-              content: highlightKeywords(text, text, {
-                keyword: "TERMINAL VIEW",
-                color: "text-[#fc3468]",
-              }),
-            },
-          ]);
-        } else {
-          const text = `FULLSCREEN ENABLED FOR ${windowId}`;
-          setLines((prev) => [
-            ...prev,
-            {
-              type: "component",
-              content: highlightKeywords(text, text, [
-                { keyword: "FULLSCREEN", color: "text-[#fc3468]" },
-                { keyword: windowId, color: "text-[#fc3468]" },
-              ]),
-            },
-          ]);
-        }
-        return;
-      }
-
-      if (command === "clear") {
-        setLines([]);
-        return;
-      }
-
-      if (!commands[command]) {
-        setLines((prev) => [
-          ...prev,
-          { type: "output", content: `Command not found: ${command}` },
-        ]);
-        return;
-      }
-
-      const output = commands[command](args);
-      if (output) {
-        setLines((prev) => [...prev, { type: "output", content: output }]);
-      }
-      scrollToBottom();
-    },
-    [windowId, terminalStore, windowStore],
-  );
 
   useEffect(() => {
     terminalStore.registerTerminal(windowId, executeCommand);
@@ -118,47 +57,6 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
     focusInput();
   }, [focusInput]);
 
-  useLayoutEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = scrollPositionRef.current;
-    }
-  });
-
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    scrollPositionRef.current = containerRef.current.scrollTop;
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    switch (e.key) {
-      case "Enter":
-        executeCommand(input);
-        setInput("");
-        break;
-      case "ArrowUp":
-        const lastCmd = terminalStore.getPreviousCommand(windowId);
-        setInput(lastCmd || "");
-        moveCursorToEnd(inputRef.current);
-        break;
-      case "ArrowDown":
-        const nextCmd = terminalStore.getNextCommand(windowId);
-        setInput(nextCmd || "");
-        moveCursorToEnd(inputRef.current);
-        break;
-      default:
-        return;
-    }
-  };
-
-  const Prompt = () => (
-    <>
-      <span className="text-[#7C76C7]">guest@matthew-portfolio</span>
-      <span className="text-[#E0DEF4]">
-        {"\u00A0"}~{"\u00A0"}$
-      </span>
-    </>
-  );
-
   return (
     <div
       ref={containerRef}
@@ -169,13 +67,7 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
     >
       {lines.map((line, i) => (
         <div key={i}>
-          {line.type === "input" && (
-            <>
-              <Prompt /> {line.content}
-            </>
-          )}
-          {line.type === "output" && <div className="ml-2">{line.content}</div>}
-          {line.type === "component" && line.content}
+          <TerminalLine line={line} />
         </div>
       ))}
       <div className="flex gap-2">

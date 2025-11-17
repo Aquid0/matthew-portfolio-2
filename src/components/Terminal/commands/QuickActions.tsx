@@ -1,10 +1,9 @@
 import { useStore } from "@/stores/StoreContext";
 import { lastCommit } from "@/utils/getLastCommit";
 
-import { TYPE_SPEED } from "./constants";
-import { asciiArt } from "./data/ascii-art";
-import { useTypewriter } from "./hooks/useTypewriter";
-import { highlightKeywords } from "./utils/highlightKeywords";
+import { highlightKeywords } from "../../../utils/highlightKeywords";
+import { asciiArt, TYPE_SPEED } from "../constants";
+import { useTypewriter } from "../hooks/useTypewriter";
 
 export const QuickActions = () => {
   const { terminalStore } = useStore();
