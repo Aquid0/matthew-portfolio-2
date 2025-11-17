@@ -76,6 +76,31 @@ export const Window = observer(
         break;
     }
 
+    if (isFixed) {
+      return (
+        <div
+          className={`h-full w-full border bg-[#110E1D]/80 shadow-md backdrop-blur-lg ${
+            isFocused ? "border-[#7C76C7]/50" : "border-[#65384B]"
+          }`}
+          data-window-id={id}
+          style={{ zIndex: zIndex }}
+          onMouseDown={handleFocus}
+        >
+          <div data-window-content={id}>
+            <TitleBar
+              title={title}
+              onClose={handleClose}
+              onMinimize={handleMinimize}
+              onMaximize={handleToggleMaximize}
+              isFocused={isFocused}
+              variant={variant}
+            />
+            {children}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <Rnd
         position={{ x, y }}
