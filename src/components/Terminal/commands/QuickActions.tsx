@@ -29,7 +29,7 @@ export const QuickActions = () => {
   return (
     <div className="my-3 -ml-2 border border-dashed border-[#2D2B40] p-4">
       <div className="text-center text-[#E0DEF4]/80">
-        <p className="mb-2">
+        <p className="mb-2 min-h-[1.5rem]">
           {highlightKeywords(displayedText, introText, {
             keyword: "Amazon",
             color: "text-[#FF9900]",
