@@ -4,19 +4,17 @@ import { AppRegistry } from "@/constants/AppRegistry";
 import type { AppId } from "@/types/store";
 import type { WindowData } from "@/types/window";
 
-export type ViewMode = "default" | "projects";
-
 export class WindowStore {
   availableApps: WindowData[] = [];
   taskbarApps: AppId[] = [];
-  viewMode: ViewMode = "default";
+  fullscreenWindowId: string | null = null;
   private readonly MAX_Z_INDEX = 1000;
 
   constructor() {
     makeObservable(this, {
       availableApps: observable.shallow,
       taskbarApps: observable,
-      viewMode: observable,
+      fullscreenWindowId: observable,
       taskbarItems: computed,
       addWindow: action,
       removeWindow: action,
@@ -25,7 +23,7 @@ export class WindowStore {
       updateWindowBounds: action,
       focusWindow: action,
       windowsWithZIndex: computed,
-      setViewMode: action,
+      setFullscreenWindow: action,
     });
   }
 
@@ -105,7 +103,7 @@ export class WindowStore {
     return this.availableApps.find((w) => w.id === id);
   }
 
-  setViewMode(mode: ViewMode) {
-    this.viewMode = mode;
+  setFullscreenWindow(id: string | null) {
+    this.fullscreenWindowId = id;
   }
 }

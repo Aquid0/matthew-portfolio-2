@@ -51,10 +51,21 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
 
       const [command, ...args] = trimmed.split(" ");
 
-      if (command === "projects") {
-        windowStore.setViewMode("projects");
-      } else if (command !== "clear") {
-        windowStore.setViewMode("default");
+      if (command === "full") {
+        if (windowStore.fullscreenWindowId === windowId) {
+          windowStore.setFullscreenWindow(null);
+          setLines((prev) => [
+            ...prev,
+            { type: "output", content: "TERMINAL VIEW ENABLED" },
+          ]);
+        } else {
+          windowStore.setFullscreenWindow(windowId);
+          setLines((prev) => [
+            ...prev,
+            { type: "output", content: `FULLSCREEN ENABLED FOR ${windowId}` },
+          ]);
+        }
+        return;
       }
 
       if (command === "clear") {
