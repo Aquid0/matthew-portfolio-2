@@ -8,7 +8,6 @@ import { useStore } from "@/stores/StoreContext";
 export const Desktop = observer(
   ({ children }: { children: React.ReactNode }) => {
     const { windowStore } = useStore();
-    console.log("Current viewMode:", windowStore.viewMode);
 
     return (
       <div className="crt-effect crt-text h-full w-full bg-[url('/desktop.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
