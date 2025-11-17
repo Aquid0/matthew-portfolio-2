@@ -1,7 +1,8 @@
 import { CommandHandler } from "@/types/terminal";
 
-import { About } from "./About/About";
-import { QuickActions } from "./QuickActions/QuickActions";
+import { About } from "./About";
+import { Projects } from "./Projects";
+import { QuickActions } from "./QuickActions";
 
 export const commands: Record<string, CommandHandler> = {
   help: () =>
@@ -10,5 +11,5 @@ export const commands: Record<string, CommandHandler> = {
   clear: () => null,
   full: () => null,
   quick_actions: () => <QuickActions />,
-  projects: () => "Projects: Project 1, Project 2...",
+  projects: () => <Projects />,
 };
