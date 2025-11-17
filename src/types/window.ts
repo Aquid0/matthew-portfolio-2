@@ -8,10 +8,10 @@ export type WindowData = {
   id: string;
   appId: AppId;
   title: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
   windowState: WindowState;
   zIndex?: number;
   prevX?: number;
@@ -20,7 +20,6 @@ export type WindowData = {
   prevHeight?: number;
   isFixed?: boolean;
   variant?: variant;
-  initialCommand?: string;
 };
 
 export type WindowProps = WindowData & {
