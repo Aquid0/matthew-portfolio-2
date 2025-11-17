@@ -1,7 +1,7 @@
 import { CommandHandler } from "@/types/terminal";
 
-import { About } from "./About";
-import { QuickActions } from "./QuickActions";
+import { About } from "./About/About";
+import { QuickActions } from "./QuickActions/QuickActions";
 
 export const commands: Record<string, CommandHandler> = {
   help: () =>
