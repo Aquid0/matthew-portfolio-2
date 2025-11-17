@@ -12,7 +12,7 @@ export const Desktop = observer(
     return (
       <div className="crt-effect h-full w-full bg-[url('/desktop.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
         <div
-          className={`grid h-[calc(100%-40px)] gap-4 p-4 ${windowStore.fullscreenWindowId ? "grid-cols-1 grid-rows-1" : "grid-cols-2 grid-rows-2"}`}
+          className={`grid h-[calc(100%-40px)] gap-4 p-4 ${windowStore.maximizedWindowId ? "grid-cols-1 grid-rows-1" : "grid-cols-2 grid-rows-2"}`}
         >
           {children}
         </div>

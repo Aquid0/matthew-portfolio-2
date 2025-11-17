@@ -60,7 +60,7 @@ const Home = observer(() => {
     <Desktop>
       {mainTerminal && (
         <div
-          className={`${!windowStore.fullscreenWindowId ? "row-span-2" : ""} ${windowStore.fullscreenWindowId && windowStore.fullscreenWindowId !== "main-terminal" ? "hidden" : ""}`}
+          className={`${!windowStore.maximizedWindowId ? "row-span-2" : ""} ${mainTerminal.windowState === "MINIMISED" ? "hidden" : ""}`}
         >
           <Window {...mainTerminal}>
             <Terminal
@@ -72,12 +72,7 @@ const Home = observer(() => {
       )}
       {quickActions && (
         <div
-          className={
-            windowStore.fullscreenWindowId &&
-            windowStore.fullscreenWindowId !== "quick-actions"
-              ? "hidden"
-              : ""
-          }
+          className={quickActions.windowState === "MINIMISED" ? "hidden" : ""}
         >
           <Window {...quickActions}>
             <Terminal
@@ -89,12 +84,7 @@ const Home = observer(() => {
       )}
       {subTerminal && (
         <div
-          className={
-            windowStore.fullscreenWindowId &&
-            windowStore.fullscreenWindowId !== "sub-terminal"
-              ? "hidden"
-              : ""
-          }
+          className={subTerminal.windowState === "MINIMISED" ? "hidden" : ""}
         >
           <Window {...subTerminal}>
             <Terminal

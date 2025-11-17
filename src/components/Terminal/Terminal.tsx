@@ -15,6 +15,7 @@ import { TerminalLine } from "@/types/terminal";
 import { moveCursorToEnd } from "@/utils/input";
 
 import { commands } from "./commands/CommandRegistry";
+import { highlightKeywords } from "./commands/utils/highlightKeywords";
 import { TerminalProps } from "./types";
 
 export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
@@ -52,17 +53,32 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
       const [command, ...args] = trimmed.split(" ");
 
       if (command === "full") {
-        if (windowStore.fullscreenWindowId === windowId) {
-          windowStore.setFullscreenWindow(null);
+        const currentWindow = windowStore.getWindow(windowId);
+        const wasMaximized = currentWindow?.windowState === "MAXIMISED";
+        windowStore.toggleMaximizeWindow(windowId);
+        if (wasMaximized) {
+          const text = "TERMINAL VIEW ENABLED";
           setLines((prev) => [
             ...prev,
-            { type: "output", content: "TERMINAL VIEW ENABLED" },
+            {
+              type: "component",
+              content: highlightKeywords(text, text, {
+                keyword: "TERMINAL VIEW",
+                color: "text-[#fc3468]",
+              }),
+            },
           ]);
         } else {
-          windowStore.setFullscreenWindow(windowId);
+          const text = `FULLSCREEN ENABLED FOR ${windowId}`;
           setLines((prev) => [
             ...prev,
-            { type: "output", content: `FULLSCREEN ENABLED FOR ${windowId}` },
+            {
+              type: "component",
+              content: highlightKeywords(text, text, [
+                { keyword: "FULLSCREEN", color: "text-[#fc3468]" },
+                { keyword: windowId, color: "text-[#fc3468]" },
+              ]),
+            },
           ]);
         }
         return;
