@@ -52,7 +52,6 @@ export class TerminalStore {
       terminal.commandHistory.push(cmd);
       terminal.historyIndex = terminal.commandHistory.length;
     }
-    console.log(terminal?.historyIndex);
   }
 
   getPreviousCommand(terminalId: string): string | undefined {
