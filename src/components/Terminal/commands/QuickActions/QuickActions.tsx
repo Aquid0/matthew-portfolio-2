@@ -48,7 +48,7 @@ export const QuickActions = () => {
       </div>
 
       <div className="flex-col gap-8">
-        <pre className="text-center text-xs leading-tight text-white">
+        <pre className="mb-1 text-center text-xs leading-tight text-white">
           {asciiArt}
         </pre>
 
@@ -66,7 +66,7 @@ export const QuickActions = () => {
           ))}
         </div>
 
-        <div className="mt-4 flex items-center justify-between text-[9px] text-[#E0DEF4]/50">
+        <div className="mt-1 flex items-center justify-between text-[9px] text-[#E0DEF4]/50">
           <div className="flex flex-col text-center font-mono">
             <p>
               <span className="opacity-70">Last Updated: </span>

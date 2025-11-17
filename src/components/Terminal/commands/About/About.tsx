@@ -7,7 +7,7 @@ export const About = () => {
   const line2 =
     "A Front-End Engineer Intern at Amazon and third-year Computer Science student at the University of Bath.";
   const line3 =
-    "I'm currently a Swansea-based FEE Intern building the Veeqo product, an all-in-one e-commerce platform that provides multi-channel shipping, order, and inventory management software for online sellers.";
+    "I'm currently in Swansea building the Veeqo product, an all-in-one e-commerce platform that provides multi-channel shipping, order, and inventory management software for online sellers.";
   const line4 =
     "When I'm not coding, I'm probably reading, writing, or drawing!";
 
