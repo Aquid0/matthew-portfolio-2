@@ -23,6 +23,7 @@ const Home = observer(() => {
       height: 0,
       windowState: "NORMAL",
       isFixed: true,
+      initialCommand: "quick_actions",
     });
 
     windowStore.addWindow({
@@ -50,6 +51,10 @@ const Home = observer(() => {
       isFixed: true,
       initialCommand: "help",
     });
+
+    // Set initial view as maximised main terminal
+
+    windowStore.toggleMaximizeWindow("main-terminal");
   }, [windowStore]);
 
   const mainTerminal = windowStore.getWindow("main-terminal");

@@ -123,4 +123,8 @@ export class WindowStore {
   getWindow(id: string) {
     return this.availableApps.find((w) => w.id === id);
   }
+
+  getIsFocused(id: string) {
+    return this.availableApps && this.availableApps[0].id === id;
+  }
 }

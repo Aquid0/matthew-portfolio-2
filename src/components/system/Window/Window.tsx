@@ -18,11 +18,11 @@ export const Window = observer(
     height,
     id,
     zIndex,
-    isFocused,
     isFixed = false,
     variant = "minimal",
   }: WindowProps) => {
     const { windowStore } = useStore();
+    const isFocused = windowStore.getIsFocused(id);
 
     const handleClose = () => {
       windowStore.removeWindow(id);
