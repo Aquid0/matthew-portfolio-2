@@ -1,6 +1,6 @@
-import { highlightKeywords } from "../../../utils/highlightKeywords";
-import { TYPE_SPEED } from "../constants";
-import { useTypewriter } from "../hooks/useTypewriter";
+import { highlightKeywords } from "../../../../utils/highlightKeywords";
+import { TYPE_SPEED } from "../../constants";
+import { useTypewriter } from "../../hooks/useTypewriter";
 
 export const About = () => {
   const line1 = "hey! I'm Matthew";
