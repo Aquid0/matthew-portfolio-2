@@ -71,24 +71,20 @@ const Home = observer(() => {
         </div>
       )}
       {windowStore.viewMode === "default" && quickActions && (
-        <div>
-          <Window {...quickActions}>
-            <Terminal
-              windowId={quickActions.id}
-              initialCommand={quickActions.initialCommand}
-            />
-          </Window>
-        </div>
+        <Window {...quickActions}>
+          <Terminal
+            windowId={quickActions.id}
+            initialCommand={quickActions.initialCommand}
+          />
+        </Window>
       )}
       {windowStore.viewMode === "default" && subTerminal && (
-        <div>
-          <Window {...subTerminal}>
-            <Terminal
-              windowId={subTerminal.id}
-              initialCommand={subTerminal.initialCommand}
-            />
-          </Window>
-        </div>
+        <Window {...subTerminal}>
+          <Terminal
+            windowId={subTerminal.id}
+            initialCommand={subTerminal.initialCommand}
+          />
+        </Window>
       )}
       <Taskbar />
     </Desktop>
