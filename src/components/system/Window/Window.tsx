@@ -40,40 +40,8 @@ export const Window = observer(
       windowStore.focusWindow(id);
     };
 
-    switch (windowStore.getWindow(id)?.windowState) {
-      case "MINIMISED":
-        return null;
-      case "MAXIMISED":
-        return (
-          <div
-            className={`absolute border bg-[#110E1D]/80 shadow-md backdrop-blur-lg ${
-              isFocused ? "border-[#7C76C7]/60" : "border-[#65384B]"
-            }`}
-            data-window-id={id}
-            style={{
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "calc(100vh - 40px)",
-              zIndex: zIndex,
-            }}
-            onMouseDown={handleFocus}
-          >
-            <div data-window-content={id}>
-              <TitleBar
-                title={title}
-                onClose={handleClose}
-                onMinimize={handleMinimize}
-                onMaximize={handleToggleMaximize}
-                variant={variant}
-                isFocused={isFocused}
-              />
-              {children}
-            </div>
-          </div>
-        );
-      default:
-        break;
+    if (windowStore.getWindow(id)?.windowState === "MINIMISED") {
+      return null;
     }
 
     if (isFixed) {

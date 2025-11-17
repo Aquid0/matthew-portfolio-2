@@ -7,14 +7,12 @@ import type { WindowData } from "@/types/window";
 export class WindowStore {
   availableApps: WindowData[] = [];
   taskbarApps: AppId[] = [];
-  fullscreenWindowId: string | null = null;
   private readonly MAX_Z_INDEX = 1000;
 
   constructor() {
     makeObservable(this, {
-      availableApps: observable.shallow,
+      availableApps: observable,
       taskbarApps: observable,
-      fullscreenWindowId: observable,
       taskbarItems: computed,
       addWindow: action,
       removeWindow: action,
@@ -23,7 +21,7 @@ export class WindowStore {
       updateWindowBounds: action,
       focusWindow: action,
       windowsWithZIndex: computed,
-      setFullscreenWindow: action,
+      maximizedWindowId: computed,
     });
   }
 
@@ -59,15 +57,38 @@ export class WindowStore {
     if (index !== -1) this.availableApps.splice(index, 1);
   }
 
+  get maximizedWindowId() {
+    const maximized = this.availableApps.find(
+      (w) => w.windowState === "MAXIMISED",
+    );
+    return maximized?.id || null;
+  }
+
   minimizeWindow(id: string) {
     const window = this.availableApps.find((w) => w.id === id);
     if (window) window.windowState = "MINIMISED";
   }
+
   toggleMaximizeWindow(id: string) {
-    const window = this.availableApps.find((w) => w.id === id);
-    if (window) {
-      window.windowState =
-        window.windowState === "MAXIMISED" ? "NORMAL" : "MAXIMISED";
+    const windowIndex = this.availableApps.findIndex((w) => w.id === id);
+    if (windowIndex === -1) return;
+
+    const window = this.availableApps[windowIndex];
+
+    if (window.windowState === "MAXIMISED") {
+      this.availableApps[windowIndex] = { ...window, windowState: "NORMAL" };
+      this.availableApps = this.availableApps.map((w) =>
+        w.id !== id && w.windowState === "MINIMISED"
+          ? { ...w, windowState: "NORMAL" }
+          : w,
+      );
+    } else {
+      this.availableApps[windowIndex] = { ...window, windowState: "MAXIMISED" };
+      this.availableApps = this.availableApps.map((w) =>
+        w.id !== id && w.windowState === "NORMAL"
+          ? { ...w, windowState: "MINIMISED" }
+          : w,
+      );
     }
   }
 
@@ -101,9 +122,5 @@ export class WindowStore {
 
   getWindow(id: string) {
     return this.availableApps.find((w) => w.id === id);
-  }
-
-  setFullscreenWindow(id: string | null) {
-    this.fullscreenWindowId = id;
   }
 }
