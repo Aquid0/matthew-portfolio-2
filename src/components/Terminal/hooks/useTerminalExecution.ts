@@ -22,56 +22,50 @@ export const useTerminalExecution = (
 
       const [command, ...args] = trimmed.split(" ");
 
-      if (command === "full") {
-        const currentWindow = windowStore.getWindow(windowId);
-        const wasMaximized = currentWindow?.windowState === "MAXIMISED";
-        windowStore.toggleMaximizeWindow(windowId);
-        if (wasMaximized) {
-          const text = "TERMINAL VIEW ENABLED";
-          setLines((prev) => [
-            ...prev,
-            {
-              type: "component",
-              content: highlightKeywords(text, text, {
-                keyword: "TERMINAL VIEW",
-                color: "text-[#fc3468]",
-              }),
-            },
-          ]);
-        } else {
-          const text = `FULLSCREEN ENABLED FOR ${windowId}`;
-          setLines((prev) => [
-            ...prev,
-            {
-              type: "component",
-              content: highlightKeywords(text, text, [
+      switch (command) {
+        case "full": {
+          const wasMaximized =
+            windowStore.getWindow(windowId)?.windowState === "MAXIMISED";
+          windowStore.toggleMaximizeWindow(windowId);
+          const text = wasMaximized
+            ? "TERMINAL VIEW ENABLED"
+            : `FULLSCREEN ENABLED FOR ${windowId}`;
+          const keywords = wasMaximized
+            ? { keyword: "TERMINAL VIEW", color: "text-[#fc3468]" }
+            : [
                 { keyword: "FULLSCREEN", color: "text-[#fc3468]" },
                 { keyword: windowId, color: "text-[#fc3468]" },
-              ]),
+              ];
+          setLines((prev) => [
+            ...prev,
+            {
+              type: "component",
+              content: highlightKeywords(text, text, keywords),
             },
           ]);
+          break;
         }
-        return;
+        case "clear":
+          setLines([]);
+          break;
+        default: {
+          if (!commands[command]) {
+            setLines((prev) => [
+              ...prev,
+              { type: "output", content: `Command not found: ${command}` },
+            ]);
+          } else {
+            const output = commands[command](args);
+            if (output) {
+              setLines((prev) => [
+                ...prev,
+                { type: "output", content: output },
+              ]);
+            }
+          }
+          scrollToBottom();
+        }
       }
-
-      if (command === "clear") {
-        setLines([]);
-        return;
-      }
-
-      if (!commands[command]) {
-        setLines((prev) => [
-          ...prev,
-          { type: "output", content: `Command not found: ${command}` },
-        ]);
-        return;
-      }
-
-      const output = commands[command](args);
-      if (output) {
-        setLines((prev) => [...prev, { type: "output", content: output }]);
-      }
-      scrollToBottom();
     },
     [windowId, terminalStore, windowStore, setLines, scrollToBottom],
   );
