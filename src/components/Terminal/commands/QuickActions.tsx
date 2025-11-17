@@ -69,8 +69,10 @@ export const QuickActions = () => {
 
         <div className="mt-4 flex items-center justify-between text-[9px] text-[#E0DEF4]/50">
           <div className="flex flex-col text-center font-mono">
-            <span className="opacity-70">Last Updated</span>
-            <span>{lastCommit.date}</span>
+            <p>
+              <span className="opacity-70">Last Updated: </span>
+              {new Date(lastCommit.date).toLocaleDateString("en-GB")}
+            </p>
           </div>
         </div>
       </div>
