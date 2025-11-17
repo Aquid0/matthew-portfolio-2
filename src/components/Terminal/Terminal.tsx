@@ -18,7 +18,7 @@ import { commands } from "./commands/CommandRegistry";
 import { TerminalProps } from "./types";
 
 export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
-  const { terminalStore } = useStore();
+  const { terminalStore, windowStore } = useStore();
 
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [input, setInput] = useState("");
@@ -51,6 +51,12 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
 
       const [command, ...args] = trimmed.split(" ");
 
+      if (command === "projects") {
+        windowStore.setViewMode("projects");
+      } else if (command !== "clear") {
+        windowStore.setViewMode("default");
+      }
+
       if (command === "clear") {
         setLines([]);
         return;
@@ -70,7 +76,7 @@ export const Terminal = memo(({ windowId, initialCommand }: TerminalProps) => {
       }
       scrollToBottom();
     },
-    [windowId, terminalStore],
+    [windowId, terminalStore, windowStore],
   );
 
   useEffect(() => {

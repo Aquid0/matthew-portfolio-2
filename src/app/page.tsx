@@ -9,24 +9,18 @@ import { Window } from "@/components/system/Window";
 import { Terminal } from "@/components/Terminal";
 import { useStore } from "@/stores/StoreContext";
 
-const WINDOW_GAP = 16;
-
 const Home = observer(() => {
-  const { windowStore, terminalStore } = useStore();
+  const { windowStore } = useStore();
 
-  // Add initial windows when component mounts
   useEffect(() => {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight - 40; // Subtract taskbar height
-
     windowStore.addWindow({
       id: "main-terminal",
       appId: "test-1",
       title: "MAIN TERMINAL",
-      x: WINDOW_GAP,
-      y: WINDOW_GAP,
-      width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
-      height: viewportHeight - WINDOW_GAP * 2,
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
       windowState: "NORMAL",
       isFixed: true,
     });
@@ -35,10 +29,10 @@ const Home = observer(() => {
       id: "quick-actions",
       appId: "test-2",
       title: "QUICK ACTIONS",
-      x: viewportWidth / 2 + WINDOW_GAP / 2,
-      y: WINDOW_GAP,
-      width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
-      height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
       windowState: "NORMAL",
       isFixed: true,
       initialCommand: "quick_actions",
@@ -48,26 +42,60 @@ const Home = observer(() => {
       id: "sub-terminal",
       appId: "test-3",
       title: "SUB TERMINAL",
-      x: viewportWidth / 2 + WINDOW_GAP / 2,
-      y: viewportHeight / 2 + WINDOW_GAP / 2,
-      width: viewportWidth / 2 - WINDOW_GAP - WINDOW_GAP / 2,
-      height: viewportHeight / 2 - WINDOW_GAP - WINDOW_GAP / 2,
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
       windowState: "NORMAL",
       isFixed: true,
       initialCommand: "help",
     });
-  }, [windowStore, terminalStore]);
+  }, [windowStore]);
+
+  const mainTerminal = windowStore.windowsWithZIndex.find(
+    (w) => w.id === "main-terminal",
+  );
+  const quickActions = windowStore.windowsWithZIndex.find(
+    (w) => w.id === "quick-actions",
+  );
+  const subTerminal = windowStore.windowsWithZIndex.find(
+    (w) => w.id === "sub-terminal",
+  );
 
   return (
     <Desktop>
-      {windowStore.windowsWithZIndex.map((windowData) => (
-        <Window key={windowData.id} {...windowData}>
-          <Terminal
-            windowId={windowData.id}
-            initialCommand={windowData.initialCommand}
-          />
-        </Window>
-      ))}
+      {mainTerminal && (
+        <div
+          className={windowStore.viewMode === "projects" ? "" : "row-span-2"}
+        >
+          <Window {...mainTerminal}>
+            <Terminal
+              windowId={mainTerminal.id}
+              initialCommand={mainTerminal.initialCommand}
+            />
+          </Window>
+        </div>
+      )}
+      {windowStore.viewMode === "default" && quickActions && (
+        <div>
+          <Window {...quickActions}>
+            <Terminal
+              windowId={quickActions.id}
+              initialCommand={quickActions.initialCommand}
+            />
+          </Window>
+        </div>
+      )}
+      {windowStore.viewMode === "default" && subTerminal && (
+        <div>
+          <Window {...subTerminal}>
+            <Terminal
+              windowId={subTerminal.id}
+              initialCommand={subTerminal.initialCommand}
+            />
+          </Window>
+        </div>
+      )}
       <Taskbar />
     </Desktop>
   );
