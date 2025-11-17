@@ -17,39 +17,21 @@ const Home = observer(() => {
       id: "main-terminal",
       appId: "test-1",
       title: "MAIN TERMINAL",
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
       windowState: "NORMAL",
-      isFixed: true,
-      initialCommand: "quick_actions",
     });
 
     windowStore.addWindow({
       id: "quick-actions",
       appId: "test-2",
       title: "QUICK ACTIONS",
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
       windowState: "NORMAL",
-      isFixed: true,
-      initialCommand: "quick_actions",
     });
 
     windowStore.addWindow({
       id: "sub-terminal",
       appId: "test-3",
       title: "SUB TERMINAL",
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
       windowState: "NORMAL",
-      isFixed: true,
-      initialCommand: "help",
     });
 
     // Set initial view as maximised main terminal
@@ -69,7 +51,7 @@ const Home = observer(() => {
           <Window {...mainTerminal}>
             <Terminal
               windowId={mainTerminal.id}
-              initialCommand={mainTerminal.initialCommand}
+              initialCommand={"quick_actions"}
             />
           </Window>
         </div>
@@ -81,7 +63,7 @@ const Home = observer(() => {
           <Window {...quickActions}>
             <Terminal
               windowId={quickActions.id}
-              initialCommand={quickActions.initialCommand}
+              initialCommand={"quick_actions"}
             />
           </Window>
         </div>
@@ -91,10 +73,7 @@ const Home = observer(() => {
           className={subTerminal.windowState === "MINIMISED" ? "hidden" : ""}
         >
           <Window {...subTerminal}>
-            <Terminal
-              windowId={subTerminal.id}
-              initialCommand={subTerminal.initialCommand}
-            />
+            <Terminal windowId={subTerminal.id} initialCommand={"help"} />
           </Window>
         </div>
       )}

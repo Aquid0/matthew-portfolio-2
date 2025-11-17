@@ -12,13 +12,13 @@ export const Window = observer(
   ({
     children,
     title,
-    x,
-    y,
-    width,
-    height,
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
     id,
     zIndex,
-    isFixed = false,
+    isFixed = true,
     variant = "minimal",
   }: WindowProps) => {
     const { windowStore } = useStore();
